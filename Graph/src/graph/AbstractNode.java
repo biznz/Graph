@@ -9,6 +9,6 @@ package graph;
  *
  * @author b1z
  */
-public interface Abstract_Node {
+public interface AbstractNode {
     
 }

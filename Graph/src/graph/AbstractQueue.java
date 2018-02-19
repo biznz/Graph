@@ -1,20 +1,14 @@
-
-package graph;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package graph;
 
 /**
  *
  * @author user
  */
-public class Tree {
+public interface AbstractQueue {
     
-    private Node root;
-
-    public Tree(Node root) {
-        this.root = root;
-    }
 }

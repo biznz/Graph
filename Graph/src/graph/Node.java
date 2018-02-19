@@ -9,20 +9,28 @@ package graph;
  *
  * @author user
  */
-public class Node implements Abstract_Node{
+public class Node implements AbstractNode{
     
-    private Node parent;
-    private State state;
-    private Move move;
-    private int depth;
-    private int cost;
+    private Node PARENT_NODE;
+    public State STATE;
+    private Move OPERATOR;
+    private int DEPTH;
+    private int PATH_COST;
 
+    public Node(State state) {
+        this.STATE = state;
+        this.PARENT_NODE = null;
+        this.OPERATOR = null;
+        this.DEPTH = 0;
+        this.PATH_COST = 0;
+    }
+    
     public Node(Node parent, State state, Move move, int depth, int cost) {
-        this.parent = parent;
-        this.state = state;
-        this.move = move;
-        this.depth = depth;
-        this.cost = cost;
+        this.PARENT_NODE = parent;
+        this.STATE = state;
+        this.OPERATOR = move;
+        this.DEPTH = depth;
+        this.PATH_COST = cost;
     }
     
     

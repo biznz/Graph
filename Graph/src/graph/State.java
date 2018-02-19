@@ -11,4 +11,19 @@ package graph;
  */
 public class State {
     
+    private int[][] puzzle;
+    
+    public State(Problem problem) {
+        int s = (puzzle.length+1)%4;
+        for(int i=0;i<s;i++){
+            for(int h=0;h<s;h++){
+                this.puzzle[h][i] = problem.input[i*s+h];
+            }
+        }
+    }
+
+    public int[][] getPuzzle() {
+        return puzzle;
+    }
+    
 }
