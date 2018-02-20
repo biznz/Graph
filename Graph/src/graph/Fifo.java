@@ -13,16 +13,16 @@ import java.util.Set;
  * @author user
  */
 public class Fifo<T> extends MyQueue<T>{
-    private LinkedList list;
-    
+    LinkedList list;
     public Fifo(){
         super();
-        list = new LinkedList();
+        this.list = new LinkedList();
     }
     @Override
-    public Fifo add(MyQueue<T> queue, Set<T> nodes) {
-        Fifo fifo = (Fifo)queue;
-        fifo.list.addAll(nodes);
-        return fifo;
+    public Fifo add(MyQueue<Node> queue, Set<Node> nodes) {
+        //Fifo fifo = (Fifo)queue;
+        this.list.addAll(queue.list);
+        this.list.addAll(nodes);
+        return this;
     }
 }

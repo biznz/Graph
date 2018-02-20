@@ -5,18 +5,13 @@
  */
 package graph;
 
-import java.util.AbstractList;
-import java.util.Collection;
-import java.util.Queue;
-import java.util.Set;
-
 /**
  *
  * @author user
  */
-public class MyQueue<T> {
-    public AbstractList<T> list;
-    public MyQueue<Node> add(MyQueue<Node> queue,Set<Node> nodes){
+public abstract class Eval {
+    
+    public MyQueue<Node> run(Problem problem){
         return null;
     }
 }

@@ -14,18 +14,17 @@ import java.util.Stack;
  * @author user
  */
 public class Lifo<T> extends MyQueue<T>{
-    private Stack<T> list;
     
     public Lifo(){
         super();
-        list = new Stack<T>();
+        list = new Stack<>();
     }
     @Override
     public Lifo add(MyQueue<T> queue, Set<T> nodes) {
-        Lifo lifo = (Lifo)queue;
+        this.list = queue.list;
         for(T n: nodes){
-            lifo.list.push(n);
+            this.list.push(n);
         }
-        return lifo;
+        return this;
     }
 }
