@@ -9,6 +9,8 @@ package graph;
  *
  * @author user
  */
+import java.lang.Integer;
+
 public class Problem {
     
     public int[] input;

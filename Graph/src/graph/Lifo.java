@@ -15,11 +15,18 @@ import java.util.Stack;
  */
 public class Lifo<T> extends MyQueue<T>{
     
+    /** TODO **
+    Confirm if I should be using a stack or dequeue
+    need to remove element from the front of a list
+    fifo vs lifo
+    **/
+    Stack list; 
+
     public Lifo(){
         super();
         list = new Stack<>();
     }
-    @Override
+    /*@Override
     public Lifo add(MyQueue<T> queue, Set<T> nodes) {
         this.list = queue.list;
         for(T n: nodes){
@@ -27,4 +34,10 @@ public class Lifo<T> extends MyQueue<T>{
         }
         return this;
     }
+
+    @Override
+    public Lifo add(Node node){
+        this.list.add(node);
+        return this;
+    }*/
 }

@@ -33,5 +33,15 @@ public class Node implements AbstractNode{
         this.PATH_COST = cost;
     }
     
-    
+    public static String result(Node node){
+        int[][] puzzle = node.STATE.getPuzzle();
+        String toPrint ="";
+        for(int i=0;i<puzzle[i].length;i++){
+            for(int s=0;s<puzzle[s].length;s++){
+                toPrint+=" "+puzzle[i][s];
+            }
+            toPrint+="\n";
+        }
+        return toPrint;
+    }
 }

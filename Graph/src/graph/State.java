@@ -25,5 +25,18 @@ public class State {
     public int[][] getPuzzle() {
         return puzzle;
     }
+
+    /*
+    @Override
+    public boolean equals(Object obj){
+        if(this==obj){
+            return true;
+        }
+
+        final State other = (State) obj;
+        if(!Objects.equals(this.puzzle,other.puzzle)){
+            return false;
+        }
+    }*/
     
 }

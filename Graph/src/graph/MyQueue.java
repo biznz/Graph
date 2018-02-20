@@ -19,4 +19,6 @@ public class MyQueue<T> {
     public MyQueue<Node> add(MyQueue<Node> queue,Set<Node> nodes){
         return null;
     }
+    /*public MyQueue<Node> add(Node node){
+    }*/
 }

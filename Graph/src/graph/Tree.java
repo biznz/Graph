@@ -12,9 +12,23 @@ package graph;
  */
 public class Tree {
     
-    private Node root;
+    public Node root;
+    public Tree[] children;
 
     public Tree(Node root) {
         this.root = root;
     }
+    
+    /*
+    public void setChildren(Set<Node> expanded){
+    	int s = 0;
+    	for(Node n : expanded){
+    		this.children[s] = new Tree(n);
+    		s++;
+    	}
+    }
+
+    public Tree[] getChildren(){
+    	return this.children;
+    }*/
 }
