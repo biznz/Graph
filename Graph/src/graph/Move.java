@@ -10,5 +10,14 @@ package graph;
  * @author b1z
  */
 public class Move {
+    private String direction;
+    
+    public Move(String direction){
+        this.direction = direction;
+    }
+    
+    public static State execute(State state,Move move){
+        
+    }
     
 }
