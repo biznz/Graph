@@ -17,6 +17,7 @@ public class Problem {
     
     public Problem(String input){
         String[] parts = input.split(" ");
+        this.input = new int[parts.length];
         for(int i=0;i<parts.length;i++){
             this.input[i] = Integer.parseInt(parts[i]);
         }

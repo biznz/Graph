@@ -49,20 +49,28 @@ public class Algorithm {
     }
     
     public static boolean checkSolvable(Problem problem){
-        int counter=0;
+        int totalInversions=0;
         int blank=-1;
         int numRows = (int) Math.sqrt(problem.input.length);
+        int position=0;
         for(int s=0;s<problem.input.length;s++){
+            int inversions=0;
             if(problem.input[s]==0){
-                blank = s/numRows+1;
+                //blank = s/numRows+1;
+                blank = numRows-(s/numRows);
             }
-            for(int h=0;h<problem.input.length;h++)
-                if(problem.input[s]>problem.input[h]){
-                    counter+=1;
+            for(int h=position;h<problem.input.length;h++){
+                //System.out.println(" checking: "+problem.input[s]+"against: "+problem.input[h]+"\n");
+                if(problem.input[s]>problem.input[h] && problem.input[s]!=0 && problem.input[h]!=0){
+                    inversions+=1;
                 }
+            }
+            System.out.println("the "+problem.input[s] +" gives us "+inversions+" inversions"+"\n");
+            position+=1;
+            totalInversions+=inversions;
         }
-        System.out.println(" counter:"+counter +" blank:"+blank+" numRows:"+numRows+"\n");
-        if(((problem.input.length%2!=0 && counter%2==0)) || ((problem.input.length%2==0) && ((blank%2==1) == (counter%2==0)))){
+        System.out.println("counter:"+totalInversions +" blank:"+blank+" numRows:"+numRows+"\n");
+        if(((problem.input.length%2!=0 && totalInversions%2==0)) || ((problem.input.length%2==0) && ((blank%2==1) == (totalInversions%2==0)))){
             return true;
         }
         return false;
