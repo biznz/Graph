@@ -5,6 +5,8 @@
  */
 package graph;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 /**
  *
@@ -19,7 +21,13 @@ public class Algorithm {
     //private Node Initial;
     
     //Heap min para busca informada
-    
+    static Set<Move> moves = new HashSet<Move>(
+            Arrays.asList(
+                    new Move("up"),
+                    new Move("down"),
+                    new Move("left"),
+                    new Move("right") 
+            ));
     
     private static String GENERAL_SEARCH(Problem initialProblem,Problem finalProblem, MyQueue<Node> QUEUEING_FN){
         if(!SOLVABLE(initialProblem,finalProblem)){return "It is impossible to reach a solution" ;}
@@ -28,12 +36,13 @@ public class Algorithm {
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
             if (STATE(node) == GOAL_TEST(finalProblem)) return Node.result(node);
-            Set<Node> new_nodes = EXPAND(node,OPERATORS(finalProblem));
+            Set<Node> new_nodes = EXPAND(node,OPERATORS());
             nodes = QUEUEING_FN.add(nodes,new_nodes);
         }
         return "solution not found";
     }
     
+    //method implements iterative depth search
     private static Node ITERATIVE_DEEPENING_SEARCH(Problem problem){
         
        while(true){
@@ -41,11 +50,13 @@ public class Algorithm {
         
     }
     
+    //method checks if both initalProblem and finalProblem are both solvable
     private static boolean SOLVABLE(Problem initialProblem, Problem finalProblem){
         if(checkSolvable(initialProblem) && checkSolvable(finalProblem)){return true;}
         return false;
     }
     
+    //method checks if problem is solvable
     public static boolean checkSolvable(Problem problem){
         int totalInversions=0;
         int blank=-1;
@@ -74,50 +85,67 @@ public class Algorithm {
         return false;
     }
     
+    //method does a depth dependent search
     private static String DEPTH_LIMITED_SEARCH(Problem initial1, Problem final1, int depth){
         maxDepth = new Integer(depth);
         return GENERAL_SEARCH(initial1,final1, new Fifo());
         
     }
     
+    //method implements a best first search
+    // used by greedy and A*
     private static String BEST_FIRST_SEARCH(Problem initial1,Problem final1, Eval EVAL_FN){
         MyQueue<Node> queue = EVAL_FN.run(initial1);
         return GENERAL_SEARCH(initial1,final1,queue);
     }
     
+    //method implements greedy search
     private static String GREEDY_SEARCH(Problem initial1,Problem final1){
         return BEST_FIRST_SEARCH(initial1,final1,null);
     }
     
+    //method returns a state from a node
     private static State STATE(Node node){
         return node.STATE;
     }
     
+    //method finds possible children of a node with all valid movements
     private static Set<Node> EXPAND(Node node,Set<Move> movements){
+        Set<Node> childNodes = new HashSet<Node>();
         for(Move m:movements){
+            if(Move.test(node.STATE, m)){
+                State newState = Move.execute(node.STATE, m);
+                Node newNode = new Node(node,newState,m,node.getDEPTH()+1,0);
+                childNodes.add(newNode);
+            }
             //Node newNode = new Node();
             
         }
         currentDepth = new Integer(currentDepth.intValue()+1);
-        return null;
+        return childNodes;
     }
     
-    private static Set<Move> OPERATORS(Problem problem){
-        return null;
+    //returns the movements available
+    private static Set<Move> OPERATORS(){
+        return moves;
     }
-            
+    
+    //builds a node from a state
+    //adds it to a tree of nodes;
     private static Node MAKE_NODE(State state){
         Node node = new Node(state);
         tree = new Tree(node);
         return node;
     }
     
+    //creates an abstract queue from a node
     private static MyQueue<Node> MAKE_QUEUE(Node node){
         MyQueue<Node> myQueue = new MyQueue<Node>();
         myQueue.add(node); 
         return myQueue;
     }
     
+    //
     private static boolean EMPTY(MyQueue<Node> nodes){
         //if(nodes.size==0){return true;}
         return false;

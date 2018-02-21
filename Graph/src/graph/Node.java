@@ -44,4 +44,26 @@ public class Node implements AbstractNode{
         }
         return toPrint;
     }
+
+    public Node getPARENT_NODE() {
+        return PARENT_NODE;
+    }
+
+    public State getSTATE() {
+        return STATE;
+    }
+
+    public Move getOPERATOR() {
+        return OPERATOR;
+    }
+
+    public int getDEPTH() {
+        return DEPTH;
+    }
+
+    public int getPATH_COST() {
+        return PATH_COST;
+    }
+    
+    
 }

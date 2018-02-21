@@ -30,9 +30,31 @@ public class State {
         }
     }
 
+    public void setxBlankIndex(int xBlankIndex) {
+        this.xBlankIndex = xBlankIndex;
+    }
+
+    public void setyBlankIndex(int yBlankIndex) {
+        this.yBlankIndex = yBlankIndex;
+    }
+
+    public void setPuzzle(int[][] puzzle) {
+        this.puzzle = puzzle;
+    }
+    
     public int[][] getPuzzle() {
         return puzzle;
     }
+
+    public int getxBlankIndex() {
+        return xBlankIndex;
+    }
+
+    public int getyBlankIndex() {
+        return yBlankIndex;
+    }
+    
+    
     
 
     @Override
