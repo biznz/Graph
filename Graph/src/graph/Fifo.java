@@ -5,6 +5,7 @@
  */
 package graph;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -17,12 +18,35 @@ public class Fifo<T> extends MyQueue<T>{
     public Fifo(){
         super();
         this.list = new LinkedList();
+        super.type = "fifo";
+        super.size = 0;
     }
+    
     @Override
     public Fifo add(MyQueue<Node> queue, Set<Node> nodes) {
-        //Fifo fifo = (Fifo)queue;
-        this.list.addAll(queue.list);
-        this.list.addAll(nodes);
-        return this;
+        Fifo fifo = (Fifo)queue;
+        fifo.list.addAll(nodes);
+        super.size+=nodes.size();
+        return fifo;
+    }
+    
+    @Override
+    public Fifo add(MyQueue<Node> queue,Node node){
+        Fifo fifo = (Fifo)queue;
+        fifo.list.add(node);
+        super.size+=1;
+        return fifo;
+    }
+    
+    @Override
+    public String toString(){
+        System.out.println("printing queue\n");
+        String result ="";
+        for(Object obj:this.list){
+            Node node = (Node)obj;
+            result+= Node.result(node);
+            result+="\n\n";
+        }
+        return result;
     }
 }

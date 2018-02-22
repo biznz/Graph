@@ -18,14 +18,18 @@ public class State {
     private int yBlankIndex;
     
     public State(Problem problem) {
+        int size = (int)Math.sqrt(problem.input.length);
+        this.puzzle = new int[size][size];
+        int counter=0;
         int s = (puzzle.length+1)%4;
-        for(int i=0;i<s;i++){
-            for(int h=0;h<s;h++){
+        for(int i=0;i<size;i++){
+            for(int h=0;h<size;h++){
                 if(problem.input[i*s+h] == 0){
                     this.xBlankIndex = h;
                     this.xBlankIndex = i;
                 }
-                this.puzzle[h][i] = problem.input[i*s+h];
+                this.puzzle[i][h] = problem.input[counter];//problem.input[i*s+h];
+                counter++;
             }
         }
     }
@@ -43,6 +47,7 @@ public class State {
     }
     
     public int[][] getPuzzle() {
+        //System.out.println("puzzle length: "+puzzle.length+"\n");
         return puzzle;
     }
 

@@ -15,11 +15,17 @@ import java.util.Set;
  * @author user
  */
 public class MyQueue<T> {
-    public AbstractList<T> list;
+    //public AbstractList<T> list;
+    protected String type;
+    protected int size;
     public MyQueue<Node> add(MyQueue<Node> queue,Set<Node> nodes){
         return null;
     }
-    public MyQueue<Node> add(Node node){
+    public MyQueue<Node> add(MyQueue<Node> queue,Node node){
+        return null;
+    }
+    
+    public String toString(){
         return null;
     }
 }

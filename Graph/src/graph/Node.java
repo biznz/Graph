@@ -36,9 +36,10 @@ public class Node implements AbstractNode{
     public static String result(Node node){
         int[][] puzzle = node.STATE.getPuzzle();
         String toPrint ="";
-        for(int i=0;i<puzzle[i].length;i++){
-            for(int s=0;s<puzzle[s].length;s++){
+        for(int i=0;i<puzzle.length;i++){
+            for(int s=0;s<puzzle.length;s++){
                 toPrint+=" "+puzzle[i][s];
+                //System.out.println(" "+puzzle[i][s]);
             }
             toPrint+="\n";
         }

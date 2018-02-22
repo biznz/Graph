@@ -29,12 +29,18 @@ public class Algorithm {
                     new Move("right") 
             ));
     
-    private static String GENERAL_SEARCH(Problem initialProblem,Problem finalProblem, MyQueue<Node> QUEUEING_FN){
+    protected static String GENERAL_SEARCH(Problem initialProblem,Problem finalProblem, MyQueue<Node> QUEUEING_FN){
+        
         if(!SOLVABLE(initialProblem,finalProblem)){return "It is impossible to reach a solution" ;}
-        MyQueue<Node> nodes = MAKE_QUEUE(MAKE_NODE(INITIAL_STATE(initialProblem)));
+        //Node n = MAKE_NODE(INITIAL_STATE(initialProblem));
+        //System.out.println(Node.result(n));
+        MyQueue<Node> nodes = MAKE_QUEUE(QUEUEING_FN,MAKE_NODE(INITIAL_STATE(initialProblem)));
+        //System.out.println(nodes.toString());
+        System.out.println("FINISHED\n");
         while(!EMPTY(nodes)){
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
+            //System.out.println(Node.result(node));
             if (STATE(node) == GOAL_TEST(finalProblem)) return Node.result(node);
             Set<Node> new_nodes = EXPAND(node,OPERATORS());
             nodes = QUEUEING_FN.add(nodes,new_nodes);
@@ -74,11 +80,11 @@ public class Algorithm {
                     inversions+=1;
                 }
             }
-            System.out.println("the "+problem.input[s] +" gives us "+inversions+" inversions"+"\n");
+            //System.out.println("the "+problem.input[s] +" gives us "+inversions+" inversions"+"\n");
             position+=1;
             totalInversions+=inversions;
         }
-        System.out.println("counter:"+totalInversions +" blank:"+blank+" numRows:"+numRows+"\n");
+        //System.out.println("counter:"+totalInversions +" blank:"+blank+" numRows:"+numRows+"\n");
         if(((problem.input.length%2!=0 && totalInversions%2==0)) || ((problem.input.length%2==0) && ((blank%2==1) == (totalInversions%2==0)))){
             return true;
         }
@@ -139,22 +145,32 @@ public class Algorithm {
     }
     
     //creates an abstract queue from a node
-    private static MyQueue<Node> MAKE_QUEUE(Node node){
-        MyQueue<Node> myQueue = new MyQueue<Node>();
-        myQueue.add(node); 
-        return myQueue;
+    private static MyQueue<Node> MAKE_QUEUE(MyQueue<Node> queue,Node node){
+        //MyQueue<Node> myQueue = queue;
+        queue.add(queue, node);
+        return queue;
     }
     
     //
     private static boolean EMPTY(MyQueue<Node> nodes){
-        //if(nodes.size==0){return true;}
+        if(nodes.size==0){return true;}
         return false;
     }
     
     private static Node REMOVE_FRONT(MyQueue<Node> nodes){
-        //Node node = nodes.remove(0);
-        //return node;
-        return null;
+        Node node = null;
+        if(nodes.size==0){return node;}
+        switch(nodes.type){
+            case "fifo":{
+                Fifo fifo = (Fifo)nodes;
+                //System.out.println(fifo.toString());
+                System.out.println("queue current size:" +fifo.size);
+                node = (Node)fifo.list.remove();
+                fifo.size--;
+                //System.out.println("REMOVED THE NODE: "+Node.result(node));
+            }
+        }
+        return node;
     }
     
     private static State GOAL_TEST(Problem problem){
@@ -162,7 +178,9 @@ public class Algorithm {
     }
 
     private static State INITIAL_STATE(Problem problem) {
-        return new State(problem);
+        State state = new State(problem);
+        //System.out.println(state.getPuzzle()+"");
+        return state;
     }
     
     //private Set<Node> EXPAND(node,)
