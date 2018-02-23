@@ -41,7 +41,8 @@ public class Move {
     }
     
     public static State execute(State state,Move move){
-        State newState = state;
+        State newState = new State();
+        //newState.setPuzzle(state.getPuzzle());
         int tempVal,x,y;
         x = state.getxBlankIndex();
         y = state.getyBlankIndex();
@@ -49,7 +50,7 @@ public class Move {
         switch(move.direction){
             case "down":{
                 //if (state.getxBlankIndex()-1<0){return null;}
-                tempVal = state.getPuzzle()[x+1][y];
+                tempVal = newState.getPuzzle()[x+1][y];
                 newState.getPuzzle()[x+1][y]=0;
                 newState.getPuzzle()[x][y] = tempVal;
                 newState.setxBlankIndex(x+1);
@@ -58,7 +59,7 @@ public class Move {
             }
             case "up":{
                 
-                tempVal = state.getPuzzle()[x-1][y];
+                tempVal = newState.getPuzzle()[x-1][y];
                 newState.getPuzzle()[x-1][y]=0;
                 newState.getPuzzle()[x][y] = tempVal;
                 newState.setxBlankIndex(x-1);
@@ -67,7 +68,7 @@ public class Move {
             }
             case "left":{
                 //if (state.getyBlankIndex()-1<0){return null;}
-                tempVal = state.getPuzzle()[x][y-1];
+                tempVal = newState.getPuzzle()[x][y-1];
                 newState.getPuzzle()[x][y-1]=0;
                 newState.getPuzzle()[x][y] = tempVal;
                 newState.setxBlankIndex(x);
@@ -76,7 +77,7 @@ public class Move {
             }
             case "right":{
                 //if (state.getyBlankIndex()+1>=state.getPuzzle().length){return null;}
-                tempVal = state.getPuzzle()[x][y+1];
+                tempVal = newState.getPuzzle()[x][y+1];
                 newState.getPuzzle()[x][y+1]=0;
                 newState.getPuzzle()[x][y] = tempVal;
                 newState.setxBlankIndex(x);
@@ -84,6 +85,10 @@ public class Move {
                 break;
             }
         }
+        /*System.out.print("movement execution operation: ");
+        System.out.println(Node.result(new Node(newState)));
+        System.out.print("and the movement was ");
+        System.out.println(move.direction);*/
         return newState;
     }
     

@@ -71,8 +71,8 @@ public class Lifo<T> extends MyQueue<T>{
         while(this.list.size()!=0){
             Node node =(Node)this.list.pop();
             result+=Node.result(node)+"\n";
-            result+="movement:\n";
-            result+=node.printMovement()+"\n";
+            result+="moving blank to: ";
+            result+=node.printMovement()+"\n\n";
         }
         return result;
     }

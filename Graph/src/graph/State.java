@@ -11,16 +11,18 @@ import java.util.Arrays;
  *
  * @author b1z
  */
-public class State {
+public class State{
     
     private int[][] puzzle;
     private int xBlankIndex;
     private int yBlankIndex;
     
+    public State(){}
+    
     public State(Problem problem) {
         int size = (int)Math.sqrt(problem.input.length);
         this.puzzle = new int[size][size];
-        int counter=0;
+        int counter = 0;
         int s = (puzzle.length+1)%4;
         for(int i=0;i<size;i++){
             for(int h=0;h<size;h++){
@@ -43,7 +45,12 @@ public class State {
     }
 
     public void setPuzzle(int[][] puzzle) {
-        this.puzzle = puzzle;
+        this.puzzle = new int[puzzle.length][puzzle.length];
+        for(int i=0;i<this.puzzle.length;i++){
+            for(int s=0;s<this.puzzle.length;s++){
+                this.puzzle[i][s] = puzzle[i][s];
+            }
+        }
     }
     
     public int[][] getPuzzle() {
