@@ -24,9 +24,9 @@ public class State {
         int s = (puzzle.length+1)%4;
         for(int i=0;i<size;i++){
             for(int h=0;h<size;h++){
-                if(problem.input[i*s+h] == 0){
-                    this.xBlankIndex = h;
+                if(problem.input[counter] == 0){
                     this.xBlankIndex = i;
+                    this.yBlankIndex = h;
                 }
                 this.puzzle[i][h] = problem.input[counter];//problem.input[i*s+h];
                 counter++;

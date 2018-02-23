@@ -16,7 +16,7 @@ public class Algorithm {
     
     static Integer maxDepth=null;
     static Integer currentDepth;
-    static Tree tree;
+    static Lifo<Node> Path;
     //private State finalState;
     //private Node Initial;
     
@@ -40,8 +40,16 @@ public class Algorithm {
         while(!EMPTY(nodes)){
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
-            //System.out.println(Node.result(node));
-            if (STATE(node) == GOAL_TEST(finalProblem)) return Node.result(node);
+            System.out.println(Node.result(node));
+            System.out.println("THE GOAL NODE:");
+            
+            //System.out.println(Node.result(new Node (GOAL_TEST(finalProblem))));
+            if (STATE(node) == GOAL_TEST(finalProblem) || currentDepth == 3){
+                Path = new Lifo<Node>();
+                //Path.build(node);
+                //return Path.pathPrint();
+                return Node.result(node);
+            }
             Set<Node> new_nodes = EXPAND(node,OPERATORS());
             nodes = QUEUEING_FN.add(nodes,new_nodes);
         }
@@ -127,7 +135,7 @@ public class Algorithm {
             //Node newNode = new Node();
             
         }
-        currentDepth = new Integer(currentDepth.intValue()+1);
+        currentDepth = new Integer(node.getDEPTH()+1);
         return childNodes;
     }
     
@@ -140,13 +148,14 @@ public class Algorithm {
     //adds it to a tree of nodes;
     private static Node MAKE_NODE(State state){
         Node node = new Node(state);
-        tree = new Tree(node);
+        //tree = new Tree(node);
         return node;
     }
     
     //creates an abstract queue from a node
     private static MyQueue<Node> MAKE_QUEUE(MyQueue<Node> queue,Node node){
         //MyQueue<Node> myQueue = queue;
+        currentDepth = new Integer(0);
         queue.add(queue, node);
         return queue;
     }
@@ -160,14 +169,23 @@ public class Algorithm {
     private static Node REMOVE_FRONT(MyQueue<Node> nodes){
         Node node = null;
         if(nodes.size==0){return node;}
+        System.out.println(nodes.type+"\n");
         switch(nodes.type){
             case "fifo":{
                 Fifo fifo = (Fifo)nodes;
-                //System.out.println(fifo.toString());
-                System.out.println("queue current size:" +fifo.size);
+                System.out.println("Removing the following node");
                 node = (Node)fifo.list.remove();
                 fifo.size--;
+                //System.out.println("queue current size:" +fifo.size);
                 //System.out.println("REMOVED THE NODE: "+Node.result(node));
+                break;
+            }
+            case "lifo":{
+                Lifo lifo = (Lifo) nodes;
+                node = (Node)lifo.list.pop();
+                lifo.size--;
+                System.out.println("queue current size:" +lifo.size);
+                break;
             }
         }
         return node;

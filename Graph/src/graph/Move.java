@@ -10,13 +10,15 @@ package graph;
  * @author b1z
  */
 public class Move {
-    private String direction;
+    public String direction;
     
     public Move(String direction){
         this.direction = direction;
     }
     
     public static boolean test(State state,Move move){
+        //System.out.println(" blank index X:"+state.getxBlankIndex());
+        //System.out.println(" blank index Y:"+state.getyBlankIndex());
         switch(move.direction){
             case "down":{
                 if (state.getxBlankIndex()+1>=state.getPuzzle().length){return false;}

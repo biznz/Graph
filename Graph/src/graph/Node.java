@@ -57,7 +57,11 @@ public class Node implements AbstractNode{
     public Move getOPERATOR() {
         return OPERATOR;
     }
-
+    
+    public String printMovement(){
+        return this.OPERATOR.direction;
+    }
+    
     public int getDEPTH() {
         return DEPTH;
     }
