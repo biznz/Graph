@@ -26,6 +26,7 @@ public class GraphMain {
         String inicial3 = "1 2 3 4 5 6 7 8 9 10 11 12 13 1 4 15 0";
         String final1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0"; // this one is a final state
         //String teste = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15"; // this one is unsolvable
+        String input1=movement1;
         Scanner in = new Scanner(System.in);
         int selectedOption=-1;
         System.out.println("Select method to solve given puzzles");
@@ -47,15 +48,16 @@ public class GraphMain {
         }
         switch(selectedOption){
             case 1:{
-                System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Lifo()));
+                System.out.println(Algorithm.GENERAL_SEARCH(new Problem(input1), new Problem(final1), new Lifo()));
                 break;
             }
             case 2:{
-                System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
+                System.out.println(Algorithm.GENERAL_SEARCH(new Problem(input1), new Problem(final1), new Fifo()));
                 break;
             }
             case 3:{
-                System.out.println("Not yet implemented");
+                //System.out.println("Not yet implemented");
+                System.out.println(Algorithm.ITERATIVE_DEEPENING_SEARCH(new Problem(input1),new Problem(final1)));
                 //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
                 break;
             }

@@ -40,8 +40,8 @@ public class Algorithm {
         while(!EMPTY(nodes)){
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
-            System.out.println(Node.result(node));
-            System.out.println("THE GOAL NODE:");
+            //System.out.println(Node.result(node));
+            //System.out.println("THE GOAL NODE:");
             
             //System.out.println(Node.result(new Node (GOAL_TEST(finalProblem))));
             if (STATE(node) == GOAL_TEST(finalProblem) || currentDepth == 3){
@@ -52,18 +52,10 @@ public class Algorithm {
             }
             Set<Node> new_nodes = EXPAND(node,OPERATORS());
             nodes = QUEUEING_FN.add(nodes,new_nodes);
+            System.out.println("current depth: "+currentDepth);
         }
         return "solution not found";
     }
-    
-    //method implements iterative depth search
-    private static Node ITERATIVE_DEEPENING_SEARCH(Problem problem){
-        
-       while(true){
-       }
-        
-    }
-    
     //method checks if both initalProblem and finalProblem are both solvable
     private static boolean SOLVABLE(Problem initialProblem, Problem finalProblem){
         if(checkSolvable(initialProblem) && checkSolvable(finalProblem)){return true;}
@@ -99,10 +91,23 @@ public class Algorithm {
         return false;
     }
     
+    //method implements iterative depth search
+    protected static String ITERATIVE_DEEPENING_SEARCH(Problem problem,Problem final1){
+       int depth=0;
+       String result;
+       while(true){
+           result = DEPTH_LIMITED_SEARCH(problem,final1,depth);
+           if(result.equals("solution not found")){depth+=1;}
+           else{break;}
+       }
+       maxDepth=null;
+       return result;
+    }
+    
     //method does a depth dependent search
     private static String DEPTH_LIMITED_SEARCH(Problem initial1, Problem final1, int depth){
         maxDepth = new Integer(depth);
-        return GENERAL_SEARCH(initial1,final1, new Fifo());
+        return GENERAL_SEARCH(initial1,final1, new Lifo());
         
     }
     
@@ -126,6 +131,9 @@ public class Algorithm {
     //method finds possible children of a node with all valid movements
     private static Set<Node> EXPAND(Node node,Set<Move> movements){
         Set<Node> childNodes = new HashSet<Node>();
+        if(Algorithm.maxDepth==null){
+            return childNodes;
+        }
         for(Move m:movements){
             if(Move.test(node.STATE, m)){
                 State newState = Move.execute(node.STATE, m);
