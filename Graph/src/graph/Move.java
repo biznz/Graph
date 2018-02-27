@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package graph;
 
 /**
  *
  * @author b1z
  */
+
 public class Move {
     public String direction;
     
@@ -46,6 +48,7 @@ public class Move {
         x = state.getxBlankIndex();
         y = state.getyBlankIndex();
         newState.setPuzzle(state.getPuzzle());
+        if(!test(state,move)){return null;}
         switch(move.direction){
             case "down":{
                 //if (state.getxBlankIndex()-1<0){return null;}
@@ -57,7 +60,6 @@ public class Move {
                 break;
             }
             case "up":{
-                
                 tempVal = state.getPuzzle()[x-1][y];
                 newState.getPuzzle()[x-1][y]=0;
                 newState.getPuzzle()[x][y] = tempVal;

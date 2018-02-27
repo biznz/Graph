@@ -33,7 +33,7 @@ public class GraphMain {
         while(selectedOption==-1){
             System.out.println("1. Depth First Search");
             System.out.println("2. Breadth First Search");
-            System.out.println("3. Iterative Deepening Search");
+            System.out.println("3. Limited Depth First Search");//Iterative Deepening Search");
             System.out.println("4. A* ");
             System.out.println("5. Greedy ");
             if(in.hasNext()){
@@ -57,7 +57,8 @@ public class GraphMain {
             }
             case 3:{
                 //System.out.println("Not yet implemented");
-                System.out.println(Algorithm.ITERATIVE_DEEPENING_SEARCH(new Problem(input1),new Problem(final1)));
+                //System.out.println(Algorithm.ITERATIVE_DEEPENING_SEARCH(new Problem(input1),new Problem(final1)));
+                System.out.println(Algorithm.DEPTH_LIMITED_SEARCH(new Problem(input1), new Problem(final1), 1));
                 //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
                 break;
             }

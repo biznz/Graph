@@ -40,10 +40,8 @@ public class Algorithm {
         while(!EMPTY(nodes)){
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
-            //System.out.println(Node.result(node));
-            //System.out.println("THE GOAL NODE:");
-            
-            //System.out.println(Node.result(new Node (GOAL_TEST(finalProblem))));
+            System.out.println("Removing the node: ");
+            System.out.println(Node.result(node));
             if (STATE(node) == GOAL_TEST(finalProblem) || currentDepth == 3){
                 Path = new Lifo<Node>();
                 //Path.build(node);
@@ -71,25 +69,22 @@ public class Algorithm {
         for(int s=0;s<problem.input.length;s++){
             int inversions=0;
             if(problem.input[s]==0){
-                //blank = s/numRows+1;
                 blank = numRows-(s/numRows);
             }
             for(int h=position;h<problem.input.length;h++){
-                //System.out.println(" checking: "+problem.input[s]+"against: "+problem.input[h]+"\n");
                 if(problem.input[s]>problem.input[h] && problem.input[s]!=0 && problem.input[h]!=0){
                     inversions+=1;
                 }
             }
-            //System.out.println("the "+problem.input[s] +" gives us "+inversions+" inversions"+"\n");
             position+=1;
             totalInversions+=inversions;
         }
-        //System.out.println("counter:"+totalInversions +" blank:"+blank+" numRows:"+numRows+"\n");
         if(((problem.input.length%2!=0 && totalInversions%2==0)) || ((problem.input.length%2==0) && ((blank%2==1) == (totalInversions%2==0)))){
             return true;
         }
         return false;
     }
+    
     
     //method implements iterative depth search
     protected static String ITERATIVE_DEEPENING_SEARCH(Problem problem,Problem final1){
@@ -105,8 +100,8 @@ public class Algorithm {
     }
     
     //method does a depth dependent search
-    private static String DEPTH_LIMITED_SEARCH(Problem initial1, Problem final1, int depth){
-        maxDepth = new Integer(depth);
+    protected static String DEPTH_LIMITED_SEARCH(Problem initial1, Problem final1, int depth){
+        maxDepth = depth;
         return GENERAL_SEARCH(initial1,final1, new Lifo());
         
     }
@@ -130,20 +125,35 @@ public class Algorithm {
     
     //method finds possible children of a node with all valid movements
     private static Set<Node> EXPAND(Node node,Set<Move> movements){
+        currentDepth = new Integer(node.getDEPTH()+1);
+        System.out.println("expanding to Depth: "+currentDepth);
+        System.out.println("maximum depth is: "+maxDepth);
         Set<Node> childNodes = new HashSet<Node>();
-        if(Algorithm.maxDepth==null){
+        if(Algorithm.maxDepth==null || currentDepth>maxDepth){
             return childNodes;
         }
         for(Move m:movements){
             if(Move.test(node.STATE, m)){
-                State newState = Move.execute(node.STATE, m);
-                Node newNode = new Node(node,newState,m,node.getDEPTH()+1,0);
-                childNodes.add(newNode);
+                State newState = new State(node.getSTATE().getPuzzle());
+                newState = Move.execute(newState, m);
+                if(newState!=null){
+                    Node newNode = new Node(node,newState,m,currentDepth,0);
+                    System.out.println("newly created node with movement: "+m.direction);
+                    System.out.println(Node.result(newNode));
+                    
+                    /*System.out.println("QEUEING THE FOLLOWING NODE:");
+                    System.out.println(Node.result(newNode));
+                    System.out.println(newNode.printMovement());
+                    System.out.println("-----------------------");*/
+                    childNodes.add(newNode);
+                }
+                else{
+                    System.out.println("Cannot do: "+m.direction+"\non"+Node.result(node));
+                }
             }
             //Node newNode = new Node();
             
         }
-        currentDepth = new Integer(node.getDEPTH()+1);
         return childNodes;
     }
     

@@ -17,6 +17,22 @@ public class State {
     private int xBlankIndex;
     private int yBlankIndex;
     
+    
+    public State(int[][] puzzle){
+        int size = puzzle.length;
+        this.puzzle = new int[size][size];
+        int s = (puzzle.length+1)%4;
+        for(int i=0;i<size;i++){
+            for(int h=0;h<size;h++){
+                if(puzzle[i][h] == 0){
+                    this.xBlankIndex = i;
+                    this.yBlankIndex = h;
+                }
+                this.puzzle[i][h] = puzzle[i][h];//problem.input[i*s+h];
+            }
+        }
+    }
+    
     public State(Problem problem) {
         int size = (int)Math.sqrt(problem.input.length);
         this.puzzle = new int[size][size];
