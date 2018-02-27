@@ -11,18 +11,32 @@ import java.util.Arrays;
  *
  * @author b1z
  */
-public class State{
+public class State {
     
     private int[][] puzzle;
     private int xBlankIndex;
     private int yBlankIndex;
     
-    public State(){}
+    
+    public State(int[][] puzzle){
+        int size = puzzle.length;
+        this.puzzle = new int[size][size];
+        int s = (puzzle.length+1)%4;
+        for(int i=0;i<size;i++){
+            for(int h=0;h<size;h++){
+                if(puzzle[i][h] == 0){
+                    this.xBlankIndex = i;
+                    this.yBlankIndex = h;
+                }
+                this.puzzle[i][h] = puzzle[i][h];//problem.input[i*s+h];
+            }
+        }
+    }
     
     public State(Problem problem) {
         int size = (int)Math.sqrt(problem.input.length);
         this.puzzle = new int[size][size];
-        int counter = 0;
+        int counter=0;
         int s = (puzzle.length+1)%4;
         for(int i=0;i<size;i++){
             for(int h=0;h<size;h++){
@@ -36,6 +50,22 @@ public class State{
         }
     }
 
+    public int[] getpiecePos(int piece){
+        int result[] = new int[2];
+        int size = this.getPuzzle().length;
+        //System.out.println(" puzzle length "+this.getPuzzle().length);
+        for(int i=0;i<size;i++){
+            for(int h=0;h<size;h++){
+                if(piece==this.getPuzzle()[i][h]){
+                    //System.out.println("checking puzzle piece: "+this.getPuzzle()[i][h]);
+                    result[0]=i;
+                    result[1]=h;
+                }
+            }
+        }
+        return result;
+    }
+    
     public void setxBlankIndex(int xBlankIndex) {
         this.xBlankIndex = xBlankIndex;
     }
@@ -45,12 +75,7 @@ public class State{
     }
 
     public void setPuzzle(int[][] puzzle) {
-        this.puzzle = new int[puzzle.length][puzzle.length];
-        for(int i=0;i<this.puzzle.length;i++){
-            for(int s=0;s<this.puzzle.length;s++){
-                this.puzzle[i][s] = puzzle[i][s];
-            }
-        }
+        this.puzzle = puzzle;
     }
     
     public int[][] getPuzzle() {

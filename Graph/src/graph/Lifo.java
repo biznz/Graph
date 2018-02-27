@@ -31,6 +31,7 @@ public class Lifo<T> extends MyQueue<T>{
     @Override
     public Lifo add(MyQueue<Node> queue, Set<Node> nodes) {
         Lifo lifo = (Lifo)queue;
+        if(nodes==null){return lifo;}
         for(Node n: nodes){
             lifo.list.push(n);
             super.size+=nodes.size();
@@ -41,9 +42,10 @@ public class Lifo<T> extends MyQueue<T>{
     @Override
     public Lifo add(MyQueue<Node> queue,Node node){
         Lifo lifo = (Lifo) queue;
+        if(node==null){return lifo;}
         lifo.list.push(node);
         super.size+=1;
-        return this;
+        return lifo;
     }
     
     @Override
@@ -71,8 +73,8 @@ public class Lifo<T> extends MyQueue<T>{
         while(this.list.size()!=0){
             Node node =(Node)this.list.pop();
             result+=Node.result(node)+"\n";
-            result+="moving blank to: ";
-            result+=node.printMovement()+"\n\n";
+            result+="movement:\n";
+            result+=node.printMovement()+"\n";
         }
         return result;
     }
