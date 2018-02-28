@@ -31,27 +31,30 @@ public class Algorithm {
             ));
     
     protected static String GENERAL_SEARCH(Problem initialProblem,Problem finalProblem, MyQueue<Node> QUEUEING_FN){
-        
+        System.out.println("current max depth is:"+maxDepth);
         if(!SOLVABLE(initialProblem,finalProblem)){return "It is impossible to reach a solution" ;}
         //Node n = MAKE_NODE(INITIAL_STATE(initialProblem));
         //System.out.println(Node.result(n));
         MyQueue<Node> nodes = MAKE_QUEUE(QUEUEING_FN,MAKE_NODE(INITIAL_STATE(initialProblem)));
         //System.out.println(nodes.toString());
-        System.out.println("FINISHED\n");
         while(!EMPTY(nodes)){
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
             //System.out.println("Removing the node: ");
             //System.out.println(Node.result(node));
-            if (STATE(node) == GOAL_TEST(finalProblem) || currentDepth == 3){
+            if (STATE(node).equals(GOAL_TEST(finalProblem))){
+                //System.out.println("REACHED A RESULT");
+                //System.out.println("printing movement path:");
                 Path = new Lifo<Node>();
                 //Path.build(node);
                 //return Path.pathPrint();
+                //System.out.println("Solution find @ depth:"+node.DEPTH);
                 return Node.result(node);
             }
             Set<Node> new_nodes = EXPAND(node,OPERATORS());
+            //if(new_nodes==null){System.out.println("NOT EXPANDING\n");}
             nodes = QUEUEING_FN.add(nodes,new_nodes);
-            System.out.println("current depth: "+currentDepth);
+            //System.out.println("current depth: "+currentDepth);
         }
         return "solution not found";
     }
@@ -61,41 +64,6 @@ public class Algorithm {
         return false;
     }
     
-    //get total pieces displacement
-    public static int total_pieces_displaced(State state){
-        int total_displaced=0;
-        for(int h=0;h<state.getPuzzle().length;h++){
-            for(int s=0;s<state.getPuzzle().length;s++){
-                if(state.getPuzzle()[h][s]!=0 && state.getPuzzle()[h][s]!=base15Matrix[h][s]){
-                    total_displaced+=1;
-                }
-            }
-        }
-        return total_displaced;
-    }
-    
-    //gets the manhatan distance of a state's puzzle
-    public static int manhatan_distances(State state){
-        int total_distance=0;
-        int distance=0;
-        int indexes[] = new int[2];
-        for(int h=0;h<state.getPuzzle().length;h++){
-            distance = 0;
-            for(int s=0;s<state.getPuzzle().length;s++){
-                if(state.getPuzzle()[h][s]!=base15Matrix[h][s] && state.getPuzzle()[h][s]!=0){
-                    System.out.println("Checking the value: "+state.getPuzzle()[h][s]);
-                    indexes = state.getpiecePos(base15Matrix[h][s]);
-                    System.out.println(" x index: "+indexes[0]+" y index: "+indexes[1]);
-                    System.out.println("h-indexes[0]: "+Math.abs(h-indexes[0])+" s-indexes[1]: "+Math.abs(s-indexes[0]));
-                    //System.out.println(s+"s"+h+"h");
-                    distance+= (Math.abs(h-indexes[0])+Math.abs(s-indexes[1]));
-                    System.out.println("The distance is: "+distance);
-                }
-            }
-            total_distance+=distance;
-        }
-        return total_distance;
-    }
     
     //method checks if problem is solvable
     public static boolean checkSolvable(Problem problem){
@@ -125,11 +93,13 @@ public class Algorithm {
     
     //method implements iterative depth search
     protected static String ITERATIVE_DEEPENING_SEARCH(Problem problem,Problem final1){
-       int depth=0;
+       int depth=1;
        String result;
        while(true){
            result = DEPTH_LIMITED_SEARCH(problem,final1,depth);
-           if(result.equals("solution not found")){depth+=1;}
+           if(result.equals("solution not found")){
+               System.out.println("solution not found at depth: "+depth);
+               depth+=1;}
            else{break;}
        }
        maxDepth=null;
@@ -138,6 +108,7 @@ public class Algorithm {
     
     //method does a depth dependent search
     protected static String DEPTH_LIMITED_SEARCH(Problem initial1, Problem final1, int depth){
+        currentDepth=0;
         maxDepth = depth;
         return GENERAL_SEARCH(initial1,final1, new Lifo());
         
@@ -163,11 +134,11 @@ public class Algorithm {
     
     //method finds possible children of a node with all valid movements
     private static Set<Node> EXPAND(Node node,Set<Move> movements){
-        System.out.println("expanding to Depth: "+(currentDepth+1));
-        System.out.println("maximum depth is: "+maxDepth);
+        //System.out.println("expanding to Depth: "+(currentDepth+1));
+        //System.out.println("maximum depth is: "+maxDepth);
         Set<Node> childNodes = new HashSet<Node>();
-        if(Algorithm.maxDepth==null || currentDepth+1>maxDepth){
-            System.out.println("ENTERED DEPTH LIMIT IN NODE EXPANSION");
+        if(maxDepth==null || currentDepth+1>maxDepth){
+            //System.out.println("ENTERED DEPTH LIMIT IN NODE EXPANSION");
             return null;
         }
         currentDepth = new Integer(node.getDEPTH()+1);
@@ -182,8 +153,8 @@ public class Algorithm {
                     
                     /*System.out.println("QEUEING THE FOLLOWING NODE:");
                     System.out.println(Node.result(newNode));
-                    System.out.println(newNode.printMovement());
-                    System.out.println("-----------------------");*/
+                    System.out.println(newNode.printMovement());*/
+                    System.out.println("-----------------------");
                     childNodes.add(newNode);
                 }
                 else{
@@ -214,11 +185,17 @@ public class Algorithm {
         //MyQueue<Node> myQueue = queue;
         currentDepth = new Integer(0);
         queue.add(queue, node);
+        //queue.size+=1;
         return queue;
     }
     
     //
     private static boolean EMPTY(MyQueue<Node> nodes){
+        System.out.println("testing emptiness at loop start");        
+        System.out.println("nodes queue size "+nodes.size);
+        System.out.println("EMPTY TEST ||||||||||||||");
+        System.out.println(nodes.toString());
+        System.out.println("EMPTY TEST ||||||||||||||\n");
         if(nodes.size==0){return true;}
         return false;
     }
@@ -226,11 +203,11 @@ public class Algorithm {
     private static Node REMOVE_FRONT(MyQueue<Node> nodes){
         Node node = null;
         if(nodes.size==0){return node;}
-        System.out.println(nodes.type+"\n");
+        //System.out.println(nodes.type+"\n");
         switch(nodes.type){
             case "fifo":{
                 Fifo fifo = (Fifo)nodes;
-                System.out.println("Removing the following node");
+                //System.out.println("Removing the following node");
                 try{
                 node = (Node)fifo.list.remove();
                 fifo.size--;
@@ -251,7 +228,7 @@ public class Algorithm {
                 catch(EmptyStackException ex){
                     return null;
                 }
-                System.out.println("queue current size:" +lifo.size);
+                //System.out.println("queue current size:" +lifo.size);
                 break;
             }
         }

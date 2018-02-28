@@ -34,7 +34,7 @@ public class Lifo<T> extends MyQueue<T>{
         if(nodes==null){return lifo;}
         for(Node n: nodes){
             lifo.list.push(n);
-            super.size+=nodes.size();
+            super.size+=1;
         }
         return lifo;
     }

@@ -11,11 +11,11 @@ package graph;
  */
 public class Node implements AbstractNode{
     
-    private Node PARENT_NODE;
-    public State STATE;
-    private Move OPERATOR;
-    private int DEPTH;
-    private int PATH_COST;
+    protected Node PARENT_NODE;
+    protected State STATE;
+    protected Move OPERATOR;
+    protected int DEPTH;
+    protected int PATH_COST;
 
     public Node(State state) {
         this.STATE = state;
