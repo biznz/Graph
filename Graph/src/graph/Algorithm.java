@@ -6,7 +6,9 @@
 package graph;
 
 import java.util.Arrays;
+import java.util.EmptyStackException;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 /**
  *
@@ -17,10 +19,9 @@ public class Algorithm {
     static Integer maxDepth=null;
     static Integer currentDepth;
     static Lifo<Node> Path;
-    //private State finalState;
-    //private Node Initial;
-    
+    static int[][] base15Matrix= {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,0}};
     //Heap min para busca informada
+    static Heuristic heuristic=null;
     static Set<Move> moves = new HashSet<Move>(
             Arrays.asList(
                     new Move("up"),
@@ -40,8 +41,8 @@ public class Algorithm {
         while(!EMPTY(nodes)){
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
-            System.out.println("Removing the node: ");
-            System.out.println(Node.result(node));
+            //System.out.println("Removing the node: ");
+            //System.out.println(Node.result(node));
             if (STATE(node) == GOAL_TEST(finalProblem) || currentDepth == 3){
                 Path = new Lifo<Node>();
                 //Path.build(node);
@@ -58,6 +59,42 @@ public class Algorithm {
     private static boolean SOLVABLE(Problem initialProblem, Problem finalProblem){
         if(checkSolvable(initialProblem) && checkSolvable(finalProblem)){return true;}
         return false;
+    }
+    
+    //get total pieces displacement
+    public static int total_pieces_displaced(State state){
+        int total_displaced=0;
+        for(int h=0;h<state.getPuzzle().length;h++){
+            for(int s=0;s<state.getPuzzle().length;s++){
+                if(state.getPuzzle()[h][s]!=0 && state.getPuzzle()[h][s]!=base15Matrix[h][s]){
+                    total_displaced+=1;
+                }
+            }
+        }
+        return total_displaced;
+    }
+    
+    //gets the manhatan distance of a state's puzzle
+    public static int manhatan_distances(State state){
+        int total_distance=0;
+        int distance=0;
+        int indexes[] = new int[2];
+        for(int h=0;h<state.getPuzzle().length;h++){
+            distance = 0;
+            for(int s=0;s<state.getPuzzle().length;s++){
+                if(state.getPuzzle()[h][s]!=base15Matrix[h][s] && state.getPuzzle()[h][s]!=0){
+                    System.out.println("Checking the value: "+state.getPuzzle()[h][s]);
+                    indexes = state.getpiecePos(base15Matrix[h][s]);
+                    System.out.println(" x index: "+indexes[0]+" y index: "+indexes[1]);
+                    System.out.println("h-indexes[0]: "+Math.abs(h-indexes[0])+" s-indexes[1]: "+Math.abs(s-indexes[0]));
+                    //System.out.println(s+"s"+h+"h");
+                    distance+= (Math.abs(h-indexes[0])+Math.abs(s-indexes[1]));
+                    System.out.println("The distance is: "+distance);
+                }
+            }
+            total_distance+=distance;
+        }
+        return total_distance;
     }
     
     //method checks if problem is solvable
@@ -120,18 +157,20 @@ public class Algorithm {
     
     //method returns a state from a node
     private static State STATE(Node node){
+        if(node==null){return null;}
         return node.STATE;
     }
     
     //method finds possible children of a node with all valid movements
     private static Set<Node> EXPAND(Node node,Set<Move> movements){
-        currentDepth = new Integer(node.getDEPTH()+1);
-        System.out.println("expanding to Depth: "+currentDepth);
+        System.out.println("expanding to Depth: "+(currentDepth+1));
         System.out.println("maximum depth is: "+maxDepth);
         Set<Node> childNodes = new HashSet<Node>();
-        if(Algorithm.maxDepth==null || currentDepth>maxDepth){
-            return childNodes;
+        if(Algorithm.maxDepth==null || currentDepth+1>maxDepth){
+            System.out.println("ENTERED DEPTH LIMIT IN NODE EXPANSION");
+            return null;
         }
+        currentDepth = new Integer(node.getDEPTH()+1);
         for(Move m:movements){
             if(Move.test(node.STATE, m)){
                 State newState = new State(node.getSTATE().getPuzzle());
@@ -192,16 +231,26 @@ public class Algorithm {
             case "fifo":{
                 Fifo fifo = (Fifo)nodes;
                 System.out.println("Removing the following node");
+                try{
                 node = (Node)fifo.list.remove();
                 fifo.size--;
+                }
+                catch(NoSuchElementException ex){
+                    return null;
+                }
                 //System.out.println("queue current size:" +fifo.size);
                 //System.out.println("REMOVED THE NODE: "+Node.result(node));
                 break;
             }
             case "lifo":{
                 Lifo lifo = (Lifo) nodes;
+                try{
                 node = (Node)lifo.list.pop();
                 lifo.size--;
+                }
+                catch(EmptyStackException ex){
+                    return null;
+                }
                 System.out.println("queue current size:" +lifo.size);
                 break;
             }

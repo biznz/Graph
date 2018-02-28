@@ -11,7 +11,7 @@ import java.util.Arrays;
  *
  * @author b1z
  */
-public class State {
+public class State implements Comparable<State>{
     
     private int[][] puzzle;
     private int xBlankIndex;
@@ -50,6 +50,23 @@ public class State {
         }
     }
 
+    public int[] getpiecePos(int piece){
+        int result[] = new int[2];
+        int size = this.getPuzzle().length;
+        //System.out.println(" puzzle length "+this.getPuzzle().length);
+        for(int i=0;i<size;i++){
+            for(int h=0;h<size;h++){
+                if(piece==this.getPuzzle()[i][h]){
+                    System.out.println("checking puzzle piece: "+this.getPuzzle()[i][h]);
+                    System.out.println("index x is:"+i+"index y is:"+h);
+                    result[0]=i;
+                    result[1]=h;
+                }
+            }
+        }
+        return result;
+    }
+    
     public void setxBlankIndex(int xBlankIndex) {
         this.xBlankIndex = xBlankIndex;
     }
@@ -101,6 +118,20 @@ public class State {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(State o) {
+        //if(Algorithm
+        if(this.puzzle == o.puzzle){
+            return 0;
+        }
+        else if (Algorithm.heuristic!=null){
+            if(Algorithm.heuristic.calculate(this)<Algorithm.heuristic.calculate(o)){
+                return -1;
+            }
+        }
+        return 1;
     }
     
 }
