@@ -5,6 +5,7 @@
  */
 package graph;
 
+
 import java.util.Scanner;
 
 /**
@@ -20,7 +21,9 @@ public class GraphMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        String movement1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 0 15";
+        String movement1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 0 15"; //solvable at depth 1
+        String movement2 = "1 2 3 4 5 6 7 8 9 10 11 12 13 0 14 15"; //solvable at depth 2
+        String movement3 = "1 2 3 4 5 6 7 8 9 0 11 12 13 10 14 15"; //solvable at depth 3
         String inicial1 = "12 1 10 2 7 11 4 14 5 0 9 15 8 13 6 3"; // this one is solvable
         String inicial2 = "1 2 3 4 13 6 8 12 5 9 0 7 14 11 10 15"; // this one is unsolvable
         String inicial3 = "1 2 3 4 5 6 7 8 9 10 11 12 13 1 4 15 0";
@@ -42,7 +45,8 @@ public class GraphMain {
         String teste5 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
         String final4 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0"; // this one is a final state
         //String teste = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15"; // this one is unsolvable
-        String input1=teste1;
+        String testeInput = teste2;
+        String testeFinal = final2;
         Scanner in = new Scanner(System.in);
         int selectedOption=-1;
         System.out.println("Select method to solve given puzzles");
@@ -50,59 +54,49 @@ public class GraphMain {
             System.out.println("1. Depth First Search");
             System.out.println("2. Breadth First Search");
             System.out.println("3. Limited Depth First Search");//Iterative Deepening Search");
-            System.out.println("4. A* ");
-            System.out.println("5. Greedy ");
+            System.out.println("4. A*");
+            System.out.println("5. Greedy");
+            System.out.println("6. exit");
             //System.out.println("6. Checks manhatan distances of a problem");
             //System.out.println("7. Checks total distances of a problem");
             if(in.hasNext()){
                 String option = in.next();
                 try{
                     selectedOption = Integer.parseInt(option);
+                    switch(selectedOption){
+                        case 1:{
+                            System.out.println(Algorithm.GENERAL_SEARCH(new Problem(testeInput), new Problem(testeFinal), new Lifo()));
+                            break;
+                        }
+                        case 2:{
+                            System.out.println(Algorithm.GENERAL_SEARCH(new Problem(testeInput), new Problem(testeFinal), new Fifo()));
+                            break;
+                        }
+                        case 3:{
+                            System.out.println(Algorithm.ITERATIVE_DEEPENING_SEARCH(new Problem(testeInput),new Problem(testeFinal)));
+                            Algorithm.maxDepth=null;
+                            break;
+                        }
+                        case 4:{
+                            System.out.println("Not yet implemented");
+                            //Algorithm.heuristic = new Heuristic();
+                            //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
+                            break;
+                        }
+                        case 5:{
+                            System.out.println("Not yet implemented");
+                            //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
+                            break;
+                        }
+                        case 6:{
+                              return;
+                        }
+                    }
                 }
                 catch(NumberFormatException exp){
                     System.out.println("Please insert a number between 1 and 5");
                 }
             }
-        }
-        switch(selectedOption){
-            case 1:{
-                System.out.println(Algorithm.GENERAL_SEARCH(new Problem(input1), new Problem(final1), new Lifo()));
-                break;
-            }
-            case 2:{
-                System.out.println(Algorithm.GENERAL_SEARCH(new Problem(input1), new Problem(final1), new Fifo()));
-                break;
-            }
-            case 3:{
-                //System.out.println("Not yet implemented");
-                System.out.println(Algorithm.ITERATIVE_DEEPENING_SEARCH(new Problem(input1),new Problem(final1)));
-                //System.out.println(Algorithm.DEPTH_LIMITED_SEARCH(new Problem(input1), new Problem(final1), 1));
-                //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
-                break;
-            }
-            case 4:{
-                System.out.println("Not yet implemented");
-                //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
-                break;
-            }
-            case 5:{
-                System.out.println("Not yet implemented");
-                //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
-                break;
-            }
-            /*case 6:{
-                State newState = new State(new Problem(input1));
-                System.out.println("manhatan distances of a problem "+Algorithm.manhatan_distances(newState));
-                //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
-                break;
-            }
-            case 7:{
-                State newState = new State(new Problem(input1));
-                System.out.println("total distances of a problem "+Algorithm.total_pieces_displaced(newState));
-                //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
-                break;
-            }*/
-            
         }
         //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
         /*Scanner in = new Scanner(System.in);

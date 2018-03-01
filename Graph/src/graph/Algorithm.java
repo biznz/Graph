@@ -31,7 +31,8 @@ public class Algorithm {
             ));
     
     protected static String GENERAL_SEARCH(Problem initialProblem,Problem finalProblem, MyQueue<Node> QUEUEING_FN){
-        System.out.println("current max depth is:"+maxDepth);
+        //System.out.println("current max depth is:"+maxDepth);
+        int visitedNodes=0;
         if(!SOLVABLE(initialProblem,finalProblem)){return "It is impossible to reach a solution" ;}
         //Node n = MAKE_NODE(INITIAL_STATE(initialProblem));
         //System.out.println(Node.result(n));
@@ -40,22 +41,28 @@ public class Algorithm {
         while(!EMPTY(nodes)){
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
+            if(node!=null){
+                visitedNodes+=1;
+            }
             //System.out.println("Removing the node: ");
             //System.out.println(Node.result(node));
             if (STATE(node).equals(GOAL_TEST(finalProblem))){
                 //System.out.println("REACHED A RESULT");
                 //System.out.println("printing movement path:");
                 Path = new Lifo<Node>();
-                //Path.build(node);
+                Path.build(node);
+                //System.out.println(Path.pathPrint());
                 //return Path.pathPrint();
-                //System.out.println("Solution find @ depth:"+node.DEPTH);
-                return Node.result(node);
+                System.out.println("visited "+visitedNodes+" nodes");
+                System.out.println("Solution found @ depth:"+node.DEPTH);
+                return Path.pathPrint();
             }
             Set<Node> new_nodes = EXPAND(node,OPERATORS());
             //if(new_nodes==null){System.out.println("NOT EXPANDING\n");}
             nodes = QUEUEING_FN.add(nodes,new_nodes);
             //System.out.println("current depth: "+currentDepth);
         }
+        System.out.println("visited "+visitedNodes+" nodes");
         return "solution not found";
     }
     //method checks if both initalProblem and finalProblem are both solvable
@@ -102,7 +109,6 @@ public class Algorithm {
                depth+=1;}
            else{break;}
        }
-       maxDepth=null;
        return result;
     }
     
@@ -134,10 +140,10 @@ public class Algorithm {
     
     //method finds possible children of a node with all valid movements
     private static Set<Node> EXPAND(Node node,Set<Move> movements){
-        //System.out.println("expanding to Depth: "+(currentDepth+1));
+        //System.out.println("expanding to Depth: "+(node.getDEPTH()+1));
         //System.out.println("maximum depth is: "+maxDepth);
         Set<Node> childNodes = new HashSet<Node>();
-        if(maxDepth==null || currentDepth+1>maxDepth){
+        if(maxDepth!=null && node.getDEPTH()+1>maxDepth){
             //System.out.println("ENTERED DEPTH LIMIT IN NODE EXPANSION");
             return null;
         }
@@ -148,13 +154,13 @@ public class Algorithm {
                 newState = Move.execute(newState, m);
                 if(newState!=null){
                     Node newNode = new Node(node,newState,m,currentDepth,0);
-                    System.out.println("newly created node with movement: "+m.direction);
+                    /*System.out.println("newly created node with movement: "+m.direction);
                     System.out.println(Node.result(newNode));
                     
-                    /*System.out.println("QEUEING THE FOLLOWING NODE:");
+                    System.out.println("QEUEING THE FOLLOWING NODE:");
                     System.out.println(Node.result(newNode));
-                    System.out.println(newNode.printMovement());*/
-                    System.out.println("-----------------------");
+                    System.out.println(newNode.printMovement());
+                    System.out.println("-----------------------");*/
                     childNodes.add(newNode);
                 }
                 else{
@@ -191,11 +197,11 @@ public class Algorithm {
     
     //
     private static boolean EMPTY(MyQueue<Node> nodes){
-        System.out.println("testing emptiness at loop start");        
+        /*System.out.println("testing emptiness at loop start");        
         System.out.println("nodes queue size "+nodes.size);
         System.out.println("EMPTY TEST ||||||||||||||");
         System.out.println(nodes.toString());
-        System.out.println("EMPTY TEST ||||||||||||||\n");
+        System.out.println("EMPTY TEST ||||||||||||||\n");*/
         if(nodes.size==0){return true;}
         return false;
     }

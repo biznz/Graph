@@ -25,6 +25,7 @@ public class Fifo<T> extends MyQueue<T>{
     @Override
     public Fifo add(MyQueue<Node> queue, Set<Node> nodes) {
         Fifo fifo = (Fifo)queue;
+        if(nodes==null){return fifo;}
         fifo.list.addAll(nodes);
         super.size+=nodes.size();
         return fifo;
@@ -33,6 +34,7 @@ public class Fifo<T> extends MyQueue<T>{
     @Override
     public Fifo add(MyQueue<Node> queue,Node node){
         Fifo fifo = (Fifo)queue;
+        if(node==null){return fifo;}
         fifo.list.add(node);
         super.size+=1;
         return fifo;

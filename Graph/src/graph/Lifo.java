@@ -61,9 +61,9 @@ public class Lifo<T> extends MyQueue<T>{
     }
     //method builds resulting path from search algorithm output
     public Lifo build(Node current){
-        while(current.getPARENT_NODE()!=null){
+        if(current!=null){
             this.list.push(current);
-            current = current.getPARENT_NODE();
+            return build(current.getPARENT_NODE());
         }
         return this;
     }
@@ -72,9 +72,14 @@ public class Lifo<T> extends MyQueue<T>{
         String result = "";
         while(this.list.size()!=0){
             Node node =(Node)this.list.pop();
+            if(node.OPERATOR!=null){
+                result+="move to: ";
+                result+=node.printMovement()+"\n\n";
+            }
+            else{
+                result+="Printing movements made \n\n";
+            }
             result+=Node.result(node)+"\n";
-            result+="movement:\n";
-            result+=node.printMovement()+"\n";
         }
         return result;
     }
