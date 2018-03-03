@@ -20,8 +20,27 @@ public class GraphMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        Menu main = new Menu(0);
+        Scanner in = new Scanner(System.in);
+        while(main.getChosenOption()==-1){
+            main.printMenu();
+            if(in.hasNext()){
+                String input = in.next();
+                try{
+                    main.setChosenOption(Integer.parseInt(input));
+                    if(main.getChosenOption()==-1){
+                        System.out.println("Not an option, try again");
+                    }
+                }
+                catch(Exception ex){
+                    System.out.println("invalid input\n");
+                }
+            }
+        }
+        
         // TODO code application logic here
-        String movement1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 0 15"; //solvable at depth 1
+        /*String movement1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 0 15"; //solvable at depth 1
         String movement2 = "1 2 3 4 5 6 7 8 9 10 11 12 13 0 14 15"; //solvable at depth 2
         String movement3 = "1 2 3 4 5 6 7 8 9 0 11 12 13 10 14 15"; //solvable at depth 3
         String inicial1 = "12 1 10 2 7 11 4 14 5 0 9 15 8 13 6 3"; // this one is solvable
@@ -30,7 +49,7 @@ public class GraphMain {
         
         /** testes enviados pela dutra**/
         
-        String teste1 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15"; //solution at depth 4
+        /*String teste1 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15"; //solution at depth 4
         String final1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0"; 
         
         String teste2 = "9 12 0 7 14 5 13 2 6 1 4 8 10 15 3 11"; //solution at depth 13
@@ -41,14 +60,15 @@ public class GraphMain {
         
         /** testes enviados pela dutra**/
         
-        String teste4 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
+        /*String teste4 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
         String teste5 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
         String final4 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0"; // this one is a final state
         //String teste = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15"; // this one is unsolvable
-        String testeInput = teste2;
-        String testeFinal = final2;
+        String testeInput = teste1;
+        String testeFinal = final1;
         Scanner in = new Scanner(System.in);
         int selectedOption=-1;
+        int selectedOption2=-1;
         System.out.println("Select method to solve given puzzles");
         while(selectedOption==-1){
             System.out.println("1. Depth First Search");
@@ -65,7 +85,9 @@ public class GraphMain {
                     selectedOption = Integer.parseInt(option);
                     switch(selectedOption){
                         case 1:{
+                            Algorithm.check_in_path=true;
                             System.out.println(Algorithm.GENERAL_SEARCH(new Problem(testeInput), new Problem(testeFinal), new Lifo()));
+                            Algorithm.check_in_path=false;
                             break;
                         }
                         case 2:{
@@ -97,16 +119,7 @@ public class GraphMain {
                     System.out.println("Please insert a number between 1 and 5");
                 }
             }
-        }
-        //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(movement1), new Problem(final1), new Fifo()));
-        /*Scanner in = new Scanner(System.in);
-        while(in.hasNextLine()){
-            String line = in.nextLine();
-            Problem problem = new Problem(movement1);
-            System.out.println("Solvable?: "+Algorithm.checkSolvable(problem));
-            if(line.equals("")){break;}
-        }
-        in.close();*/
+        }*/
     }
     
 }

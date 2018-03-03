@@ -1,0 +1,108 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package graph;
+
+import java.util.HashMap;
+import java.util.TreeMap;
+
+/**
+ *
+ * @author b1z
+ */
+public class Menu {
+    private TreeMap<Integer,String> options;
+    private int lvl;
+    private int chosenOption;
+    private Menu subMenu;
+    private String message="Select one of the following options\n";
+    private static String option1="Depth First Search";
+    private static String option2="Breadth First Search";
+    private static String option3="Limited Depth First Search";
+    private static String option4="A*";
+    private static String option5="Greedy";
+    private static String option6="exit";
+    
+    private static String input;
+    private static String output;
+    /** testes enviados pela dutra**/
+    
+    private HashMap<String,String> puzzles;
+    private String teste1 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15"; //solution at depth 4
+    private String final1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0";
+    
+    private String teste2 = "9 12 0 7 14 5 13 2 6 1 4 8 10 15 3 11"; //solution at depth 13
+    private String final2 = "9 5 12 7 14 13 0 8 1 3 2 4 6 10 15 11";
+    
+    private String teste3 = "6 12 0 9 14 2 5 11 7 8 4 13 3 10 1 15"; //solution at depth 8
+    private String final3 = "14 6 12 9 7 2 5 11 8 4 13 15 3 10 1 0";
+        
+    /** testes enviados pela dutra**/
+    
+    private String teste4 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
+    private String teste5 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
+    private String final4 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0";
+    
+    
+    
+    public Menu(int level){
+        options = new TreeMap<Integer,String>();
+        switch(level){
+            case 0:{
+                puzzles.put("teste1", teste1);
+                puzzles.put("final1", final1);
+                puzzles.put("teste2", teste2);
+                puzzles.put("final2", final2);
+                puzzles.put("teste3", teste3);
+                puzzles.put("final3", final3);
+                options.put(1,teste1+"\n"+final1);
+                options.put(2,teste2+"\n"+final2);
+                options.put(3,teste3+"\n"+final3);
+                options.put(options.size()+1,"Insert a new puzzle and goal");
+                this.message = "Select a puzzle and goal state, or, give it your own puzzle \n";
+                break;
+            }
+            case 1:{
+                options.put(1, option1);
+                options.put(2, option2);
+                options.put(3, option3);
+                options.put(4, option4);
+                options.put(5, option5);
+                options.put(6, option6);
+                this.message = "Select one of the following options\n";
+                break;
+            }
+            
+        }
+        chosenOption=-1;
+        subMenu = null;
+    }
+    
+    public void insertNewPuzzle(String input,String goal){
+        this.options.put(this.options.size(), input+"\n"+goal);
+    }
+
+    public void setChosenOption(int chosenOption) {
+        if(this.options.keySet().contains(chosenOption)){
+            this.chosenOption = chosenOption;
+        }
+        /*if(this.lvl=0){
+            
+        }*/
+    }
+
+    public int getChosenOption() {
+        return chosenOption;
+    }
+    
+    public void printMenu(){
+        System.out.println(this.message);
+        String result="";
+        for(Integer t :this.options.keySet()){
+            result+=t+". "+this.options.get(t)+"\n";
+        }
+        System.out.println(result);
+    }
+}

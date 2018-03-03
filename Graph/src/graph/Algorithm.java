@@ -22,6 +22,7 @@ public class Algorithm {
     static int[][] base15Matrix= {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,0}};
     //Heap min para busca informada
     static Heuristic heuristic=null;
+    static boolean check_in_path=false;
     static Set<Move> moves = new HashSet<Move>(
             Arrays.asList(
                     new Move("up"),
@@ -161,7 +162,14 @@ public class Algorithm {
                     System.out.println(Node.result(newNode));
                     System.out.println(newNode.printMovement());
                     System.out.println("-----------------------");*/
-                    childNodes.add(newNode);
+                    if(check_in_path){
+                        if(!is_in_path(newNode.getPARENT_NODE(),newNode)){
+                            childNodes.add(newNode);
+                        }
+                    }
+                    else{
+                        childNodes.add(newNode);
+                    }
                 }
                 else{
                     System.out.println("Cannot do: "+m.direction+"\non"+Node.result(node));
@@ -176,6 +184,17 @@ public class Algorithm {
     //returns the movements available
     private static Set<Move> OPERATORS(){
         return moves;
+    }
+    
+    
+    private static boolean is_in_path(Node new_Node,Node check){
+        if(check.equals(new_Node)){
+            return true;
+        }
+        if(new_Node!=null){
+            return is_in_path(new_Node.getPARENT_NODE(),check);
+        }
+        return false;
     }
     
     //builds a node from a state
