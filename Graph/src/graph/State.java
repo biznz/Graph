@@ -33,6 +33,20 @@ public class State{
         }
     }
     
+    public String printPuzzle(){
+        String result="";
+        for(int i=0;i<this.puzzle.length;i++){
+            for( int s=0;s<this.puzzle.length;s++){
+                result+=this.puzzle[i][s]+" ";
+                if(s+1==this.puzzle.length){
+                    result+="\n";
+                }
+            }
+        }
+        return result;
+    }
+    
+    
     public State(Problem problem) {
         int size = (int)Math.sqrt(problem.input.length);
         this.puzzle = new int[size][size];
@@ -53,12 +67,12 @@ public class State{
     public int[] getpiecePos(int piece){
         int result[] = new int[2];
         int size = this.getPuzzle().length;
-        //System.out.println(" puzzle length "+this.getPuzzle().length);
+        System.out.println("  \n\n"+this.printPuzzle());
         for(int i=0;i<size;i++){
             for(int h=0;h<size;h++){
-                if(piece==this.getPuzzle()[i][h]){
-                    //System.out.println("checking puzzle piece: "+this.getPuzzle()[i][h]);
-                    //System.out.println("index x is:"+i+"index y is:"+h);
+                if(piece==Algorithm.base15Matrix[i][h]){
+                    //System.out.println("checking puzzle piece: "+piece);
+                    //System.out.println("index x is: "+i+" index y is: "+h);
                     result[0]=i;
                     result[1]=h;
                 }

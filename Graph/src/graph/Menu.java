@@ -20,7 +20,7 @@ public class Menu {
     private String message="Select one of the following options\n";
     private static String option1="Depth First Search";
     private static String option2="Breadth First Search";
-    private static String option3="Limited Depth First Search";
+    private static String option3="Iterative Deepening Depth-First Search";
     private static String option4="A*";
     private static String option5="Greedy";
     private static String option6="Check if input is Solvable";
@@ -65,9 +65,9 @@ public class Menu {
                 puzzles.put("final3", final3);
                 puzzles.put("teste4", teste4);
                 puzzles.put("final4", final4);
-                options.put(1,"["+teste1+"]"+"\n   ["+final1+"]\n");
-                options.put(2,"["+teste2+"]"+"\n   ["+final2+"]\n");
-                options.put(3,"["+teste3+"]"+"\n   ["+final3+"]\n");
+                options.put(1,"["+teste1+"]  solution at depth 4"+"\n   ["+final1+"]\n");
+                options.put(2,"["+teste2+"] solution at depth 13"+"\n   ["+final2+"]\n");
+                options.put(3,"["+teste3+"] solution at depth 8"+"\n   ["+final3+"]\n");
                 options.put(4,"["+teste4+"]"+"\n   ["+final4+"]\n");
                 options.put(options.size()+1,"Insert a new puzzle and goal");
                 options.put(options.size()+1, "exit");

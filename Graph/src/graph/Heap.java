@@ -14,6 +14,7 @@ import java.util.Set;
  */
 public class Heap<T> extends MyQueue<T> {
     
+    Set<Heuristic> heuristics;
     PriorityQueue list;
     
     public Heap(){
@@ -21,6 +22,15 @@ public class Heap<T> extends MyQueue<T> {
         list = new PriorityQueue();
         super.type = "heap";
         super.size = 0;
+        this.heuristics=null;
+    }
+
+    Heap(Set<Heuristic> heuristics) {
+        super();
+        list = new PriorityQueue();
+        super.type = "heap";
+        super.size = 0;
+        this.heuristics=heuristics;
     }
     
     @Override

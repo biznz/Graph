@@ -42,6 +42,7 @@ public class GraphMain {
                 }
             }
         }
+        if(main.getChosenOption()==main.options.size()){return ;}
         if(main.getChosenOption()==main.options.size()-1){
             main.subMenu.printMenu();
             boolean choseFirst = false;
@@ -93,9 +94,11 @@ public class GraphMain {
         switch(secondary.getChosenOption()){
             case 1:{
                 Algorithm.check_in_path=true;
+                Algorithm.maxDepth=35;
                 System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()),
                         new Problem(Menu.getOutput()), new Lifo()));
                 Algorithm.check_in_path=false;
+                Algorithm.maxDepth=null;
                 break;
             }
             case 2:{
@@ -115,10 +118,11 @@ public class GraphMain {
                 Algorithm.heuristic = new HashSet<Heuristic>();
                 Heuristic a = new ManHatan_Distance();
                 Heuristic b = new Total_Displaced();
-                //Algorithm.heuristic.add(new ManHatan_Distance());
-                //Algorithm.heuristic.add(new Total_Displaced());
-                System.out.println("manhatan distance is "+a.calculate(new State(new Problem(Menu.getInput()))));
-                System.out.println("total displaced is "+b.calculate(new State(new Problem(Menu.getInput()))));
+                Algorithm.heuristic.add(new ManHatan_Distance());
+                Algorithm.heuristic.add(new Total_Displaced());
+                //System.out.println("manhatan distance is "+a.calculate(new State(new Problem(Menu.getInput()))));
+                //System.out.println("total displaced is "+b.calculate(new State(new Problem(Menu.getInput()))));
+                System.out.println(Algorithm.A_STAR_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput()),Algorithm.heuristic));
                 //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput()), new Heap()));
                 break;
             }

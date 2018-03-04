@@ -10,8 +10,4 @@ package graph;
  * @author user
  */
 public abstract class Eval {
-    
-    public MyQueue<Node> run(Problem problem){
-        return null;
-    }
 }

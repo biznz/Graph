@@ -123,16 +123,21 @@ public class Algorithm {
         
     }
     
-    //method implements a best first search
-    // used by greedy and A*
-    private static String BEST_FIRST_SEARCH(Problem initial1,Problem final1, Eval EVAL_FN){
-        MyQueue<Node> queue = EVAL_FN.run(initial1);
-        return GENERAL_SEARCH(initial1,final1,queue);
+    
+    protected static String A_STAR_SEARCH(Problem initial1,Problem final1,Set<Heuristic> heuristics){
+        return BEST_FIRST_SEARCH(initial1,final1,heuristics);
     }
     
     //method implements greedy search
-    private static String GREEDY_SEARCH(Problem initial1,Problem final1){
-        return BEST_FIRST_SEARCH(initial1,final1,null);
+    protected static String GREEDY_SEARCH(Problem initial,Problem final1,Set<Heuristic> heuristics){
+        return BEST_FIRST_SEARCH(initial,final1,heuristics);
+    }
+    
+    //method implements a best first search
+    // used by greedy and A*
+    private static String BEST_FIRST_SEARCH(Problem initial1,Problem final1, Set<Heuristic> heuristics){
+        MyQueue<Node> queue = new Heap(heuristics);
+        return GENERAL_SEARCH(initial1,final1,queue);
     }
     
     //method returns a state from a node
