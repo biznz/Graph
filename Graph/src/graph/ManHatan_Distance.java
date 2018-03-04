@@ -26,7 +26,7 @@ public class ManHatan_Distance extends Heuristic{
                     //System.out.println("h-indexes[0]: "+Math.abs(h-indexes[0])+" s-indexes[1]: "+Math.abs(s-indexes[0]));
                     //System.out.println(s+"s"+h+"h");
                     distance+= (Math.abs(h-indexes[0])+Math.abs(s-indexes[1]));
-                    //System.out.println("The distance is: "+distance);
+                    System.out.println("The distance for "+state.getPuzzle()[h][s]+" is: "+distance);
                 }
             }
             total_distance+=distance;

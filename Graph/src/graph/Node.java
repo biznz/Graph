@@ -9,7 +9,7 @@ package graph;
  *
  * @author user
  */
-public class Node implements AbstractNode{
+public class Node implements Comparable<Node>{
     
     protected Node PARENT_NODE;
     protected State STATE;
@@ -70,5 +70,33 @@ public class Node implements AbstractNode{
         return PATH_COST;
     }
     
+    
+    @Override
+    public int compareTo(Node o) {
+        System.out.println("Comparing Node: ");
+        System.out.println(Node.result(this));
+        System.out.println("With: ");
+        System.out.println(Node.result(o));
+        if(this.STATE.getPuzzle() == o.STATE.getPuzzle()){
+            return 0;
+        }
+        else if (Algorithm.heuristic!=null){
+            int totalA=0;
+            int totalB=0;
+            for(Heuristic h: Algorithm.heuristic){
+                totalA +=h.calculate(this.STATE);
+                System.out.println("cost "+totalA);
+                totalB +=h.calculate(this.STATE);
+                System.out.println("cost "+totalB);
+                System.out.println("");
+            }
+            this.PATH_COST=totalA;
+            o.PATH_COST=totalB;
+            if(totalA<totalB){
+                return -1;
+            }
+        }
+        return 1;
+    }
     
 }

@@ -6,7 +6,9 @@
 package graph;
 
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  *
@@ -40,7 +42,7 @@ public class GraphMain {
                 }
             }
         }
-        if(main.getChosenOption()==4){
+        if(main.getChosenOption()==main.options.size()-1){
             main.subMenu.printMenu();
             boolean choseFirst = false;
             boolean choseSecond = false;
@@ -81,9 +83,57 @@ public class GraphMain {
         System.out.println("Testing initial state: "+Menu.getInput()+"\n"+"and goal state: "
                 +Menu.getOutput());
         System.out.println("Selected action: "+secondary.getOptionString());
-        System.out.println("\nPress ENTER to start");
-        in.nextLine();
-        
+        System.out.println("\nInsert 0 to start");
+        while(!start){
+            String a = in.next();
+            if(a.equals("0")){
+                start=true;
+            }
+        }
+        switch(secondary.getChosenOption()){
+            case 1:{
+                Algorithm.check_in_path=true;
+                System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()),
+                        new Problem(Menu.getOutput()), new Lifo()));
+                Algorithm.check_in_path=false;
+                break;
+            }
+            case 2:{
+                System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()),
+                        new Problem(Menu.getOutput()), new Fifo()));
+                break;
+            }
+            case 3:{
+                System.out.println(Algorithm.ITERATIVE_DEEPENING_SEARCH(new Problem(Menu.getInput()),
+                        new Problem(Menu.getOutput())));
+                Algorithm.maxDepth=null;
+                break;
+            }
+            case 4:{
+                //System.out.println("Not yet implemented");
+                //Algorithm.heuristic = new Heuristic();
+                Algorithm.heuristic = new HashSet<Heuristic>();
+                Heuristic a = new ManHatan_Distance();
+                Heuristic b = new Total_Displaced();
+                //Algorithm.heuristic.add(new ManHatan_Distance());
+                //Algorithm.heuristic.add(new Total_Displaced());
+                System.out.println("manhatan distance is "+a.calculate(new State(new Problem(Menu.getInput()))));
+                System.out.println("total displaced is "+b.calculate(new State(new Problem(Menu.getInput()))));
+                //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput()), new Heap()));
+                break;
+            }
+            case 5:{
+                break;
+            }
+            case 6:{
+                System.out.println("Solvable: "+Algorithm.SOLVABLE(new Problem(Menu.getInput()), new Problem(Menu.getOutput())));
+                break;
+            }
+            case 7:{
+                break;
+            }
+            
+        }
         // TODO code application logic here
         /*String movement1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 0 15"; //solvable at depth 1
         String movement2 = "1 2 3 4 5 6 7 8 9 10 11 12 13 0 14 15"; //solvable at depth 2

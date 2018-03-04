@@ -21,7 +21,7 @@ public class Algorithm {
     static Lifo<Node> Path;
     static int[][] base15Matrix= {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,0}};
     //Heap min para busca informada
-    static Heuristic heuristic=null;
+    static Set<Heuristic> heuristic=null;
     static boolean check_in_path=false;
     static Set<Move> moves = new HashSet<Move>(
             Arrays.asList(
@@ -42,6 +42,8 @@ public class Algorithm {
         while(!EMPTY(nodes)){
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
+            //System.out.println("Removing node:\n"+Node.result(node)+"\n");
+            //System.out.println("path cost:"+node.getPATH_COST());
             if(node!=null){
                 visitedNodes+=1;
             }
@@ -67,7 +69,7 @@ public class Algorithm {
         return "solution not found";
     }
     //method checks if both initalProblem and finalProblem are both solvable
-    private static boolean SOLVABLE(Problem initialProblem, Problem finalProblem){
+    public static boolean SOLVABLE(Problem initialProblem, Problem finalProblem){
         if(checkSolvable(initialProblem) && checkSolvable(finalProblem)){return true;}
         return false;
     }
@@ -254,6 +256,17 @@ public class Algorithm {
                     return null;
                 }
                 //System.out.println("queue current size:" +lifo.size);
+                break;
+            }
+            case "heap":{
+                Heap heap = (Heap) nodes;
+                try{
+                    node = (Node)heap.list.remove();
+                    heap.size--;
+                }
+                catch(EmptyStackException ex){
+                    return null;
+                }
                 break;
             }
         }

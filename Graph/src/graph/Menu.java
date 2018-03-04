@@ -13,7 +13,7 @@ import java.util.TreeMap;
  * @author b1z
  */
 public class Menu {
-    private TreeMap<Integer,String> options;
+    protected TreeMap<Integer,String> options;
     private int lvl;
     private int chosenOption;
     protected Menu subMenu;
@@ -23,7 +23,8 @@ public class Menu {
     private static String option3="Limited Depth First Search";
     private static String option4="A*";
     private static String option5="Greedy";
-    private static String option6="exit";
+    private static String option6="Check if input is Solvable";
+    private static String option7="exit";
     
     private static String input;
     private static String output;
@@ -38,12 +39,15 @@ public class Menu {
     
     private String teste3 = "6 12 0 9 14 2 5 11 7 8 4 13 3 10 1 15"; //solution at depth 8
     private String final3 = "14 6 12 9 7 2 5 11 8 4 13 15 3 10 1 0";
+    
+    private String teste4 = "1 2 3 4 5 6 7 0 9 10 11 8 13 14 15 12";
+    private String final4 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0";
         
     /** testes enviados pela dutra**/
     
-    private String teste4 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
+    /*private String teste4 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
     private String teste5 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
-    private String final4 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0";
+    private String final4 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0";*/
     
     
     
@@ -59,9 +63,12 @@ public class Menu {
                 puzzles.put("final2", final2);
                 puzzles.put("teste3", teste3);
                 puzzles.put("final3", final3);
+                puzzles.put("teste4", teste4);
+                puzzles.put("final4", final4);
                 options.put(1,"["+teste1+"]"+"\n   ["+final1+"]\n");
                 options.put(2,"["+teste2+"]"+"\n   ["+final2+"]\n");
                 options.put(3,"["+teste3+"]"+"\n   ["+final3+"]\n");
+                options.put(4,"["+teste4+"]"+"\n   ["+final4+"]\n");
                 options.put(options.size()+1,"Insert a new puzzle and goal");
                 options.put(options.size()+1, "exit");
                 this.message = "Select a puzzle and goal state, or, give it your own puzzle \n";
@@ -74,6 +81,7 @@ public class Menu {
                 options.put(4, option4);
                 options.put(5, option5);
                 options.put(6, option6);
+                options.put(7, option7);
                 this.message = "Select one of the following options\n";
                 break;
             }
@@ -99,7 +107,7 @@ public class Menu {
         //System.out.println("Chosen the following option "+chosenOption);
         if(this.lvl==0){
             this.subMenu= new Menu(2);
-            if(chosenOption!=4){
+            if(chosenOption!=this.options.size()-1){
                 this.setInput(menu.puzzles.get("teste"+chosenOption));
                 this.setOutput(menu.puzzles.get("final"+chosenOption));
             }
