@@ -16,7 +16,7 @@ public class Menu {
     private TreeMap<Integer,String> options;
     private int lvl;
     private int chosenOption;
-    private Menu subMenu;
+    protected Menu subMenu;
     private String message="Select one of the following options\n";
     private static String option1="Depth First Search";
     private static String option2="Breadth First Search";
@@ -49,18 +49,21 @@ public class Menu {
     
     public Menu(int level){
         options = new TreeMap<Integer,String>();
+        this.lvl = level;
         switch(level){
             case 0:{
+                puzzles = new HashMap<String,String>();
                 puzzles.put("teste1", teste1);
                 puzzles.put("final1", final1);
                 puzzles.put("teste2", teste2);
                 puzzles.put("final2", final2);
                 puzzles.put("teste3", teste3);
                 puzzles.put("final3", final3);
-                options.put(1,teste1+"\n"+final1);
-                options.put(2,teste2+"\n"+final2);
-                options.put(3,teste3+"\n"+final3);
+                options.put(1,"["+teste1+"]"+"\n   ["+final1+"]\n");
+                options.put(2,"["+teste2+"]"+"\n   ["+final2+"]\n");
+                options.put(3,"["+teste3+"]"+"\n   ["+final3+"]\n");
                 options.put(options.size()+1,"Insert a new puzzle and goal");
+                options.put(options.size()+1, "exit");
                 this.message = "Select a puzzle and goal state, or, give it your own puzzle \n";
                 break;
             }
@@ -74,6 +77,10 @@ public class Menu {
                 this.message = "Select one of the following options\n";
                 break;
             }
+            case 2:{
+                this.message = "Introduce puzzle initial state and goal state\n";
+                break;
+            }
             
         }
         chosenOption=-1;
@@ -81,20 +88,46 @@ public class Menu {
     }
     
     public void insertNewPuzzle(String input,String goal){
-        this.options.put(this.options.size(), input+"\n"+goal);
+        //this.puzzles.put(input, goal);
+        //this.options.put(this.options.size(), input+"\n"+goal);
     }
 
-    public void setChosenOption(int chosenOption) {
+    public void setChosenOption(int chosenOption,Menu menu) {
         if(this.options.keySet().contains(chosenOption)){
             this.chosenOption = chosenOption;
         }
-        /*if(this.lvl=0){
-            
-        }*/
+        //System.out.println("Chosen the following option "+chosenOption);
+        if(this.lvl==0){
+            this.subMenu= new Menu(2);
+            if(chosenOption!=4){
+                this.setInput(menu.puzzles.get("teste"+chosenOption));
+                this.setOutput(menu.puzzles.get("final"+chosenOption));
+            }
+        }
     }
-
+    
+    public void setInput(String a){
+        input = a;
+    }
+    
+    public void setOutput(String b){
+        output = b;
+    }
+    
+    public static String getInput(){
+        return input;
+    }
+    
+    public static String getOutput(){
+        return output;
+    }
+    
     public int getChosenOption() {
         return chosenOption;
+    }
+    
+    public String getOptionString(){
+        return this.options.get(this.chosenOption);
     }
     
     public void printMenu(){

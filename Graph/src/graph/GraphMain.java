@@ -22,13 +22,15 @@ public class GraphMain {
     public static void main(String[] args) {
         
         Menu main = new Menu(0);
+        Menu secondary = new Menu(1);
         Scanner in = new Scanner(System.in);
+        boolean start = false;
         while(main.getChosenOption()==-1){
             main.printMenu();
             if(in.hasNext()){
                 String input = in.next();
                 try{
-                    main.setChosenOption(Integer.parseInt(input));
+                    main.setChosenOption(Integer.parseInt(input),main);
                     if(main.getChosenOption()==-1){
                         System.out.println("Not an option, try again");
                     }
@@ -38,6 +40,49 @@ public class GraphMain {
                 }
             }
         }
+        if(main.getChosenOption()==4){
+            main.subMenu.printMenu();
+            boolean choseFirst = false;
+            boolean choseSecond = false;
+            String result="",result1;
+            while(!choseFirst){
+                System.out.println("Initial State: ");
+                if(in.hasNextLine()){
+                    result = in.nextLine();
+                    main.setInput(result);
+                    choseFirst=true;
+                }
+            }
+            while(!choseSecond){
+                System.out.println("Final State: ");
+                if(in.hasNextLine()){
+                    result1 = in.nextLine();
+                    main.setOutput(result1);
+                    choseSecond = true;
+                }
+            }
+        }
+        while(secondary.getChosenOption()==-1){
+            secondary.printMenu();
+            if(in.hasNext()){
+                String input = in.next();
+                try{
+                    secondary.setChosenOption(Integer.parseInt(input),null);
+                    if(secondary.getChosenOption()==-1){
+                        System.out.println("Not an option, try again");
+                    }
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                    System.out.println("invalid input\n");
+                }
+            }
+        }
+        System.out.println("Testing initial state: "+Menu.getInput()+"\n"+"and goal state: "
+                +Menu.getOutput());
+        System.out.println("Selected action: "+secondary.getOptionString());
+        System.out.println("\nPress ENTER to start");
+        in.nextLine();
         
         // TODO code application logic here
         /*String movement1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 0 15"; //solvable at depth 1
