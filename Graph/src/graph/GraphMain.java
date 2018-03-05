@@ -76,6 +76,9 @@ public class GraphMain {
                     if(secondary.getChosenOption()==-1){
                         System.out.println("Not an option, try again");
                     }
+                    if(secondary.getChosenOption()==secondary.options.size()){
+                        return;
+                    }
                 }
                 catch(Exception ex){
                     ex.printStackTrace();
@@ -122,6 +125,7 @@ public class GraphMain {
                 Heuristic b = new Total_Displaced();
                 Algorithm.heuristic.add(a);
                 Algorithm.heuristic.add(b);
+                Algorithm.currentCost=100000;
                 //System.out.println("manhatan distance is "+a.calculate(new State(new Problem(Menu.getInput()))));
                 //System.out.println("total displaced is "+b.calculate(new State(new Problem(Menu.getInput()))));
                 System.out.println(Algorithm.A_STAR_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput()),Algorithm.heuristic));

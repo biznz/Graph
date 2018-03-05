@@ -16,8 +16,9 @@ import java.util.Set;
  */
 public class Algorithm {
     
-    static Integer maxDepth=null;
+    static Integer maxDepth = null;
     static Integer currentDepth;
+    static Integer currentCost;
     static Lifo<Node> Path;
     static int[][] base15Matrix= {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,0}};
     //Heap min para busca informada
@@ -42,9 +43,11 @@ public class Algorithm {
         while(!EMPTY(nodes)){
             //System.out.println("---------");
             //System.out.println(nodes.toString());
-            //System.out.println("---------");
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
+            System.out.println(Node.result(node));
+            System.out.println("cost:"+node.PATH_COST);
+            System.out.println("---------");
             //System.out.println("Removing node:\n"+Node.result(node)+"\n");
             //System.out.println("path cost:"+node.getPATH_COST());
             if(node!=null){
@@ -122,7 +125,7 @@ public class Algorithm {
     
     //method does a depth dependent search
     protected static String DEPTH_LIMITED_SEARCH(Problem initial1, Problem final1, int depth){
-        currentDepth=0;
+        currentDepth = 0;
         maxDepth = depth;
         return GENERAL_SEARCH(initial1,final1, new Lifo());
         
@@ -272,6 +275,10 @@ public class Algorithm {
                 Heap heap = (Heap) nodes;
                 try{
                     node = (Node)heap.list.remove();
+                    /*if(Algorithm.currentCost<node.PATH_COST){
+                        return null;
+                    }*/
+                    Algorithm.currentCost=node.PATH_COST;
                     heap.size--;
                 }
                 catch(EmptyStackException ex){
