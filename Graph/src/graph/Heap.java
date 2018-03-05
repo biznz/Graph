@@ -23,6 +23,7 @@ public class Heap<T> extends MyQueue<T> {
         super.type = "heap";
         super.size = 0;
         this.heuristics=null;
+        super.maxSize = 0;
     }
 
     Heap(Set<Heuristic> heuristics) {
@@ -40,6 +41,9 @@ public class Heap<T> extends MyQueue<T> {
         for(Node n: nodes){
             heap.list.add(n);
             super.size+=nodes.size();
+            if(super.size>super.maxSize){
+                super.maxSize = super.size;
+            }
         }
         return heap;
     }
@@ -48,8 +52,11 @@ public class Heap<T> extends MyQueue<T> {
     public Heap add(MyQueue<Node> queue,Node node){
         Heap heap = (Heap) queue;
         if(node==null){return heap;}
+        for(Heuristic h: Algorithm.heuristic){node.PATH_COST +=h.calculate(node.STATE);}
         heap.list.add(node);
         super.size+=1;
+        if(super.size>super.maxSize){
+            super.maxSize=super.size;}
         return heap;
     }
     
@@ -60,7 +67,7 @@ public class Heap<T> extends MyQueue<T> {
         for(Object obj:this.list){
             Node node = (Node)obj;
             result+= Node.result(node);
-            result+="\n\n";
+            result+="\ncost:"+node.PATH_COST+"\n";
         }
         return result;
     }

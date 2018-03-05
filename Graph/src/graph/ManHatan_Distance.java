@@ -16,7 +16,7 @@ public class ManHatan_Distance extends Heuristic{
         int total_distance=0;
         int distance=0;
         int indexes[] = new int[2];
-        System.out.println(" Manhatan Heuristic distance ");
+        //System.out.println(" Manhatan Heuristic distance ");
         //System.out.println(state.printPuzzle()+"\n on calculate");
         for(int h=0;h<state.getPuzzle().length;h++){
             distance = 0;

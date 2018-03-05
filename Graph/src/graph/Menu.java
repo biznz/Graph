@@ -40,7 +40,7 @@ public class Menu {
     private String teste3 = "6 12 0 9 14 2 5 11 7 8 4 13 3 10 1 15"; //solution at depth 8
     private String final3 = "14 6 12 9 7 2 5 11 8 4 13 15 3 10 1 0";
     
-    private String teste4 = "1 2 3 4 5 6 7 0 9 10 11 8 13 14 15 12";
+    private String teste4 = "1 2 3 4 5 6 7 0 9 10 11 8 13 14 15 12"; //solution at depth 2
     private String final4 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0";
         
     /** testes enviados pela dutra**/
@@ -68,7 +68,7 @@ public class Menu {
                 options.put(1,"["+teste1+"]  solution at depth 4"+"\n   ["+final1+"]\n");
                 options.put(2,"["+teste2+"] solution at depth 13"+"\n   ["+final2+"]\n");
                 options.put(3,"["+teste3+"] solution at depth 8"+"\n   ["+final3+"]\n");
-                options.put(4,"["+teste4+"]"+"\n   ["+final4+"]\n");
+                options.put(4,"["+teste4+"] solution at depth 2"+"\n   ["+final4+"]\n");
                 options.put(options.size()+1,"Insert a new puzzle and goal");
                 options.put(options.size()+1, "exit");
                 this.message = "Select a puzzle and goal state, or, give it your own puzzle \n";

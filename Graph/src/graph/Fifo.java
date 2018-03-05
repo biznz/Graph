@@ -20,6 +20,7 @@ public class Fifo<T> extends MyQueue<T>{
         this.list = new LinkedList();
         super.type = "fifo";
         super.size = 0;
+        super.maxSize = 0;
     }
     
     @Override
@@ -28,6 +29,9 @@ public class Fifo<T> extends MyQueue<T>{
         if(nodes==null){return fifo;}
         fifo.list.addAll(nodes);
         super.size+=nodes.size();
+        if(super.size>super.maxSize){
+            super.maxSize=super.size;
+        }
         return fifo;
     }
     
@@ -37,6 +41,9 @@ public class Fifo<T> extends MyQueue<T>{
         if(node==null){return fifo;}
         fifo.list.add(node);
         super.size+=1;
+        if(super.size>super.maxSize){
+            super.maxSize=super.size;
+        }
         return fifo;
     }
     

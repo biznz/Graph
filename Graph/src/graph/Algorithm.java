@@ -40,6 +40,9 @@ public class Algorithm {
         MyQueue<Node> nodes = MAKE_QUEUE(QUEUEING_FN,MAKE_NODE(INITIAL_STATE(initialProblem)));
         //System.out.println(nodes.toString());
         while(!EMPTY(nodes)){
+            //System.out.println("---------");
+            //System.out.println(nodes.toString());
+            //System.out.println("---------");
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
             //System.out.println("Removing node:\n"+Node.result(node)+"\n");
@@ -56,6 +59,7 @@ public class Algorithm {
                 Path.build(node);
                 //System.out.println(Path.pathPrint());
                 //return Path.pathPrint();
+                System.out.println("max Nodes:"+QUEUEING_FN.maxSize);
                 System.out.println("visited "+visitedNodes+" nodes");
                 System.out.println("Solution found @ depth:"+node.DEPTH);
                 return Path.pathPrint();
@@ -65,6 +69,7 @@ public class Algorithm {
             nodes = QUEUEING_FN.add(nodes,new_nodes);
             //System.out.println("current depth: "+currentDepth);
         }
+        System.out.println("max Nodes:"+QUEUEING_FN.maxSize);
         System.out.println("visited "+visitedNodes+" nodes");
         return "solution not found";
     }

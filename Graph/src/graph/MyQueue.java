@@ -18,6 +18,7 @@ public class MyQueue<T> {
     //public AbstractList<T> list;
     protected String type;
     protected int size;
+    protected int maxSize;
     public MyQueue<Node> add(MyQueue<Node> queue,Set<Node> nodes){
         return null;
     }

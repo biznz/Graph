@@ -27,6 +27,7 @@ public class Lifo<T> extends MyQueue<T>{
         list = new Stack<>();
         super.type = "lifo";
         super.size = 0;
+        super.maxSize = 0;
     }
     @Override
     public Lifo add(MyQueue<Node> queue, Set<Node> nodes) {
@@ -35,6 +36,9 @@ public class Lifo<T> extends MyQueue<T>{
         for(Node n: nodes){
             lifo.list.push(n);
             super.size+=1;
+            if(super.size>super.maxSize){
+                super.maxSize = super.size;
+            }
         }
         return lifo;
     }
@@ -45,6 +49,9 @@ public class Lifo<T> extends MyQueue<T>{
         if(node==null){return lifo;}
         lifo.list.push(node);
         super.size+=1;
+        if(super.size>super.maxSize){
+            super.maxSize=super.size;
+        }
         return lifo;
     }
     
@@ -79,7 +86,7 @@ public class Lifo<T> extends MyQueue<T>{
             else{
                 result+="Printing movements made \n\n";
             }
-            result+=Node.result(node)+"\n";
+            //result+=Node.result(node)+"\n";
         }
         return result;
     }

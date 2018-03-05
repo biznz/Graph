@@ -73,10 +73,10 @@ public class Node implements Comparable<Node>{
     
     @Override
     public int compareTo(Node o) {
-        System.out.println("Comparing Node: ");
-        System.out.println(Node.result(this));
-        System.out.println("With: ");
-        System.out.println(Node.result(o));
+        //System.out.println("Comparing Node: ");
+        //System.out.println(Node.result(this));
+        //System.out.println("With: ");
+        //System.out.println(Node.result(o));
         if(this.STATE.getPuzzle() == o.STATE.getPuzzle()){
             return 0;
         }
@@ -85,10 +85,10 @@ public class Node implements Comparable<Node>{
             int totalB=0;
             for(Heuristic h: Algorithm.heuristic){
                 totalA +=h.calculate(this.STATE);
-                System.out.println("cost "+totalA);
-                totalB +=h.calculate(this.STATE);
-                System.out.println("cost "+totalB);
-                System.out.println("");
+                //System.out.println("cost "+totalA);
+                totalB +=h.calculate(o.STATE);
+                //System.out.println("cost "+totalB);
+                //System.out.println("");
             }
             this.PATH_COST=totalA;
             o.PATH_COST=totalB;

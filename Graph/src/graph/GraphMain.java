@@ -49,16 +49,18 @@ public class GraphMain {
             boolean choseSecond = false;
             String result="",result1;
             while(!choseFirst){
-                System.out.println("Initial State: ");
+                //System.out.println("Initial State: ");
                 if(in.hasNextLine()){
+                    System.out.print("Initial State: "+in.nextLine());
                     result = in.nextLine();
                     main.setInput(result);
                     choseFirst=true;
                 }
             }
             while(!choseSecond){
-                System.out.println("Final State: ");
+                //System.out.println("Final State: ");
                 if(in.hasNextLine()){
+                    System.out.print("Final State: "+in.nextLine());
                     result1 = in.nextLine();
                     main.setOutput(result1);
                     choseSecond = true;
@@ -118,8 +120,8 @@ public class GraphMain {
                 Algorithm.heuristic = new HashSet<Heuristic>();
                 Heuristic a = new ManHatan_Distance();
                 Heuristic b = new Total_Displaced();
-                Algorithm.heuristic.add(new ManHatan_Distance());
-                Algorithm.heuristic.add(new Total_Displaced());
+                Algorithm.heuristic.add(a);
+                Algorithm.heuristic.add(b);
                 //System.out.println("manhatan distance is "+a.calculate(new State(new Problem(Menu.getInput()))));
                 //System.out.println("total displaced is "+b.calculate(new State(new Problem(Menu.getInput()))));
                 System.out.println(Algorithm.A_STAR_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput()),Algorithm.heuristic));
@@ -127,6 +129,9 @@ public class GraphMain {
                 break;
             }
             case 5:{
+                Algorithm.heuristic = new HashSet<Heuristic>();
+                Algorithm.heuristic.add(new Total_Displaced());
+                System.out.println(Algorithm.A_STAR_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput()),Algorithm.heuristic));
                 break;
             }
             case 6:{

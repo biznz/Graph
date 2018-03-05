@@ -67,7 +67,7 @@ public class State{
     public int[] getpiecePos(int piece){
         int result[] = new int[2];
         int size = this.getPuzzle().length;
-        System.out.println("  \n\n"+this.printPuzzle());
+        //System.out.println("  \n\n"+this.printPuzzle());
         for(int i=0;i<size;i++){
             for(int h=0;h<size;h++){
                 if(piece==Algorithm.base15Matrix[i][h]){
