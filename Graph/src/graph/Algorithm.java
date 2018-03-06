@@ -189,9 +189,6 @@ public class Algorithm {
                         if(!is_in_path(newNode.getPARENT_NODE(),newNode)){
                             childNodes.add(newNode);
                         }
-                        else{
-                            System.out.println("found a repeated node");
-                        }
                     }
                     else{
                         childNodes.add(newNode);
@@ -214,10 +211,8 @@ public class Algorithm {
     
     
     private static boolean is_in_path(Node new_Node,Node check){
-        if(check.equals(new_Node)){
-            return true;
-        }
         if(new_Node!=null){
+            if(check.compareTo(new_Node)==0){return true;}
             return is_in_path(new_Node.getPARENT_NODE(),check);
         }
         return false;

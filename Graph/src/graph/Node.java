@@ -76,10 +76,10 @@ public class Node implements Comparable<Node>{
     
     @Override
     public int compareTo(Node o) {
-        System.out.println("Comparing Node: ");
+        /*System.out.println("Comparing Node: ");
         System.out.println(Node.result(this));
         System.out.println("With: ");
-        System.out.println(Node.result(o));
+        System.out.println(Node.result(o));*/
         if(Arrays.deepEquals(this.STATE.getPuzzle(),o.STATE.getPuzzle())){
             return 0;
         }
