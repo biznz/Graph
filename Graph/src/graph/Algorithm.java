@@ -19,10 +19,11 @@ public class Algorithm {
     static Integer maxDepth = null;
     static Integer currentDepth;
     static Integer currentCost;
+    static Integer visitedNodes=0;
     static Lifo<Node> Path;
     static int[][] base15Matrix= {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,0}};
     //Heap min para busca informada
-    static Set<Heuristic> heuristic=null;
+    static HashSet<Heuristic> heuristic;
     static boolean check_in_path=false;
     static Set<Move> moves = new HashSet<Move>(
             Arrays.asList(
@@ -33,8 +34,6 @@ public class Algorithm {
             ));
     
     protected static String GENERAL_SEARCH(Problem initialProblem,Problem finalProblem, MyQueue<Node> QUEUEING_FN){
-        //System.out.println("current max depth is:"+maxDepth);
-        int visitedNodes=0;
         if(!SOLVABLE(initialProblem,finalProblem)){return "It is impossible to reach a solution" ;}
         //Node n = MAKE_NODE(INITIAL_STATE(initialProblem));
         //System.out.println(Node.result(n));
@@ -45,14 +44,11 @@ public class Algorithm {
             //System.out.println(nodes.toString());
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
-            System.out.println(Node.result(node));
+            /*System.out.println(Node.result(node));
             System.out.println("cost:"+node.PATH_COST);
-            System.out.println("---------");
+            System.out.println("---------");*/
             //System.out.println("Removing node:\n"+Node.result(node)+"\n");
             //System.out.println("path cost:"+node.getPATH_COST());
-            if(node!=null){
-                visitedNodes+=1;
-            }
             //System.out.println("Removing the node: ");
             //System.out.println(Node.result(node));
             if (STATE(node).equals(GOAL_TEST(finalProblem))){
@@ -68,9 +64,7 @@ public class Algorithm {
                 return Path.pathPrint();
             }
             Set<Node> new_nodes = EXPAND(node,OPERATORS());
-            //if(new_nodes==null){System.out.println("NOT EXPANDING\n");}
             nodes = QUEUEING_FN.add(nodes,new_nodes);
-            //System.out.println("current depth: "+currentDepth);
         }
         System.out.println("max Nodes:"+QUEUEING_FN.maxSize);
         System.out.println("visited "+visitedNodes+" nodes");
@@ -132,13 +126,27 @@ public class Algorithm {
     }
     
     
-    protected static String A_STAR_SEARCH(Problem initial1,Problem final1,Set<Heuristic> heuristics){
-        return BEST_FIRST_SEARCH(initial1,final1,heuristics);
+    protected static String A_STAR_SEARCH(Problem initial1,Problem final1){
+        HashSet<Heuristic> heuristic = new HashSet<Heuristic>();
+        //Algorithm.heuristic = new HashSet<Heuristic>();
+        Heuristic a = new ManHatan_Distance();
+        Heuristic b = new Total_Displaced();
+        heuristic.add(a);
+        heuristic.add(b);
+        Algorithm.heuristic = heuristic;
+        Algorithm.currentCost=100000;
+        return BEST_FIRST_SEARCH(initial1,final1,heuristic);
     }
     
     //method implements greedy search
-    protected static String GREEDY_SEARCH(Problem initial,Problem final1,Set<Heuristic> heuristics){
-        return BEST_FIRST_SEARCH(initial,final1,heuristics);
+    protected static String GREEDY_SEARCH(Problem initial,Problem final1){
+        HashSet<Heuristic> heuristic = new HashSet<Heuristic>();
+        //Algorithm.heuristic = new HashSet<Heuristic>();
+        Heuristic b = new Total_Displaced();
+        heuristic.add(b);
+        Algorithm.heuristic = heuristic;
+        Algorithm.currentCost=100000;
+        return BEST_FIRST_SEARCH(initial,final1,heuristic);
     }
     
     //method implements a best first search
@@ -180,6 +188,9 @@ public class Algorithm {
                     if(check_in_path){
                         if(!is_in_path(newNode.getPARENT_NODE(),newNode)){
                             childNodes.add(newNode);
+                        }
+                        else{
+                            System.out.println("found a repeated node");
                         }
                     }
                     else{
@@ -244,6 +255,7 @@ public class Algorithm {
         Node node = null;
         if(nodes.size==0){return node;}
         //System.out.println(nodes.type+"\n");
+        visitedNodes+=1;
         switch(nodes.type){
             case "fifo":{
                 Fifo fifo = (Fifo)nodes;

@@ -1,4 +1,7 @@
 package graph;
+
+import java.util.Arrays;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -73,11 +76,11 @@ public class Node implements Comparable<Node>{
     
     @Override
     public int compareTo(Node o) {
-        //System.out.println("Comparing Node: ");
-        //System.out.println(Node.result(this));
-        //System.out.println("With: ");
-        //System.out.println(Node.result(o));
-        if(this.STATE.getPuzzle() == o.STATE.getPuzzle()){
+        System.out.println("Comparing Node: ");
+        System.out.println(Node.result(this));
+        System.out.println("With: ");
+        System.out.println(Node.result(o));
+        if(Arrays.deepEquals(this.STATE.getPuzzle(),o.STATE.getPuzzle())){
             return 0;
         }
         else if (Algorithm.heuristic!=null){
