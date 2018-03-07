@@ -127,7 +127,7 @@ public class GraphMain {
                 //Algorithm.heuristic = new Heuristic();
                 //System.out.println("manhatan distance is "+a.calculate(new State(new Problem(Menu.getInput()))));
                 //System.out.println("total displaced is "+b.calculate(new State(new Problem(Menu.getInput()))));
-                //Algorithm.check_in_path=true;
+                Algorithm.check_in_path=true;
                 System.out.println(Algorithm.A_STAR_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput())));
                 Algorithm.clearSettings();
                 //Algorithm.check_in_path=false;

@@ -52,12 +52,9 @@ public class Heap<T> extends MyQueue<T> {
         for(Heuristic h: Algorithm.heuristic){
             if(!h.type.equals("pathcost")){
                 node.setPATH_COST(node.DEPTH+h.calculate(node.STATE));
-                System.out.println("manhatan distance"+h.calculate(node.STATE));
+                //System.out.println("manhatan distance"+h.calculate(node.STATE));
             }
         }
-        System.out.println("node depth: "+node.DEPTH);
-        //System.out.println("value: "+node.DEPTH);
-        System.out.println("node total cost: "+node.PATH_COST);
         heap.list.add(node);
         super.size+=1;
         if(super.size>super.maxSize){

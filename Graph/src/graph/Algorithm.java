@@ -44,10 +44,10 @@ public class Algorithm {
             //System.out.println(nodes.toString());
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
-            System.out.println(Node.result(node));
+            /*System.out.println(Node.result(node));
             System.out.println("printing node @ depth: "+node.DEPTH);
             System.out.println("cost:"+node.PATH_COST);
-            System.out.println("---------");
+            System.out.println("---------");*/
             //System.out.println("Removing node:\n"+Node.result(node)+"\n");
             //System.out.println("path cost:"+node.getPATH_COST());
             //System.out.println("Removing the node: ");
@@ -187,7 +187,7 @@ public class Algorithm {
                 State newState = new State(node.getSTATE().getPuzzle());
                 newState = Move.execute(newState, m);
                 if(newState!=null){
-                    Node newNode = new Node(node,newState,m,currentDepth,currentDepth);
+                    Node newNode = new Node(node,newState,m,node.getDEPTH()+1,node.getDEPTH()+1);
                     childNodes.add(newNode);
                     /*System.out.println("newly created node with movement: "+m.direction);
                     System.out.println(Node.result(newNode));
@@ -286,11 +286,7 @@ public class Algorithm {
                     node = (Node)lifo.list.pop();
                     lifo.size--;
                     if(check_in_path && lifo.size!=0){
-                    //System.out.println("-----checking at lvl"+node.DEPTH);
                     while(is_in_path(node.getPARENT_NODE(),node)){
-                        /*System.out.println("Found a repeated node");
-                        System.out.println("@ depth "+node.getDEPTH());
-                        System.out.println(Node.result(node));*/
                         node = (Node) lifo.list.pop();
                         lifo.size--;
                         }
@@ -307,21 +303,16 @@ public class Algorithm {
                 try{
                     node = (Node) heap.list.remove();
                     heap.size--;
-                    if(node.PATH_COST<=Algorithm.currentCost){
-                        Algorithm.currentCost=node.PATH_COST;
-                    }
-                    while(node.PATH_COST>Algorithm.currentCost){
-                        /*System.out.println("Found a repeated node");
-                        System.out.println("@ depth "+node.getDEPTH());
-                            System.out.println(Node.result(node));*/
+                    if(check_in_path && heap.size!=0){
+                        //System.out.println("CHECKING REPETITIONS");
+                        while(is_in_path(node.getPARENT_NODE(),node)){
+                            //System.out.println("found a repeated node");
                             node = (Node) heap.list.remove();
                             heap.size--;
-                            if(node.PATH_COST<=Algorithm.currentCost){
-                                Algorithm.currentCost=node.PATH_COST;
-                            }
+                        }
                     }
-                    System.out.println("removed node pathCost: "+node.getPATH_COST());
-                    Algorithm.currentCost=node.PATH_COST;
+                    //System.out.println("removed node pathCost: "+node.getPATH_COST());
+                    //Algorithm.currentCost=node.PATH_COST;
                 }
                 catch(EmptyStackException ex){
                     return null;
