@@ -20,13 +20,6 @@ public class Total_Displaced extends Heuristic{
             displaced = 0;
             for(int s=0;s<state.getPuzzle().length;s++){
                 if(state.getPuzzle()[h][s]!=Algorithm.base15Matrix[h][s] && state.getPuzzle()[h][s]!=0){
-                    //System.out.println("Checking the value: "+state.getPuzzle()[h][s]);
-                    //indexes = state.getpiecePos(Algorithm.base15Matrix[h][s]);
-                    //System.out.println(" x index: "+indexes[0]+" y index: "+indexes[1]);
-                    //System.out.println("h-indexes[0]: "+Math.abs(h-indexes[0])+" s-indexes[1]: "+Math.abs(s-indexes[0]));
-                    //System.out.println(s+"s"+h+"h");
-                    //distance+= (Math.abs(h-indexes[0])+Math.abs(s-indexes[1]));
-                    //System.out.println("The distance is: "+distance);
                     displaced+=1;
                 }
             }

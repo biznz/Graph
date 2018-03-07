@@ -22,14 +22,8 @@ public class ManHatan_Distance extends Heuristic{
             distance = 0;
             for(int s=0;s<state.getPuzzle().length;s++){
                 if(state.getPuzzle()[h][s]!=Algorithm.base15Matrix[h][s] && state.getPuzzle()[h][s]!=0){
-                    //System.out.println("Checking the value: "+state.getPuzzle()[h][s]);
                     indexes = state.getpiecePos(state.getPuzzle()[h][s]);
-                    //System.out.println(" x index: "+indexes[0]+" y index: "+indexes[1]);
-                    //System.out.println("h-indexes[0]: "+Math.abs(h-indexes[0])+" s-indexes[1]: "+Math.abs(s-indexes[0]));
-                    //System.out.println("calculating for: "+state.getPuzzle()[h][s]+" \n");
-                    //System.out.println(h+" h "+s+" s "+"reference indexes 0: "+indexes[0]+" 1: "+indexes[1]);
                     distance+= (Math.abs(h-indexes[0])+Math.abs(s-indexes[1]));
-                    //System.out.println("The distance for "+state.getPuzzle()[h][s]+" is: "+distance);
                 }
             }
             total_distance+=distance;

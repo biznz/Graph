@@ -73,14 +73,25 @@ public class Node implements Comparable<Node>{
         return PATH_COST;
     }
     
+    private static boolean equalPuzzle(Node a,Node b){
+        for(int s=0;s<a.STATE.getPuzzle().length;s++){
+            for(int h=0;h<b.STATE.getPuzzle().length;h++){
+                if(a.STATE.getPuzzle()[s][h]!=b.STATE.getPuzzle()[s][h]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     
     @Override
     public int compareTo(Node o) {
         /*System.out.println("Comparing Node: ");
         System.out.println(Node.result(this));
-        System.out.println("With: ");
-        System.out.println(Node.result(o));*/
-        if(Arrays.deepEquals(this.STATE.getPuzzle(),o.STATE.getPuzzle())){
+        System.out.println("at lvl "+this.DEPTH);
+        System.out.println(Node.result(o));
+        System.out.println("at lvl "+o.DEPTH);*/
+        if(equalPuzzle(this,o)){
             return 0;
         }
         else if (Algorithm.heuristic!=null){

@@ -104,7 +104,7 @@ public class GraphMain {
         switch(secondary.getChosenOption()){
             case 1:{
                 Algorithm.check_in_path=true;
-                Algorithm.maxDepth=35;
+                //Algorithm.maxDepth=35;
                 System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()),
                         new Problem(Menu.getOutput()), new Lifo()));
                 Algorithm.check_in_path=false;
@@ -127,7 +127,9 @@ public class GraphMain {
                 //Algorithm.heuristic = new Heuristic();
                 //System.out.println("manhatan distance is "+a.calculate(new State(new Problem(Menu.getInput()))));
                 //System.out.println("total displaced is "+b.calculate(new State(new Problem(Menu.getInput()))));
+                //Algorithm.check_in_path=true;
                 System.out.println(Algorithm.A_STAR_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput())));
+                //Algorithm.check_in_path=false;
                 //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput()), new Heap()));
                 break;
             }

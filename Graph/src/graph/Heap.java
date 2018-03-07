@@ -40,7 +40,7 @@ public class Heap<T> extends MyQueue<T> {
         if(nodes==null){return heap;}
         for(Node n: nodes){
             heap.list.add(n);
-            super.size+=nodes.size();
+            super.size+=1;
             if(super.size>super.maxSize){
                 super.maxSize = super.size;
             }

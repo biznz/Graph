@@ -70,6 +70,10 @@ public class Lifo<T> extends MyQueue<T>{
     public Lifo build(Node current){
         if(current!=null){
             this.list.push(current);
+            super.size+=1;
+            if(super.size>super.maxSize){
+                super.maxSize=super.size;
+            }
             return build(current.getPARENT_NODE());
         }
         return this;

@@ -28,7 +28,7 @@ public class Fifo<T> extends MyQueue<T>{
         Fifo fifo = (Fifo)queue;
         if(nodes==null){return fifo;}
         fifo.list.addAll(nodes);
-        super.size+=nodes.size();
+        super.size=fifo.list.size();
         if(super.size>super.maxSize){
             super.maxSize=super.size;
         }
@@ -40,7 +40,7 @@ public class Fifo<T> extends MyQueue<T>{
         Fifo fifo = (Fifo)queue;
         if(node==null){return fifo;}
         fifo.list.add(node);
-        super.size+=1;
+        super.size=fifo.list.size();
         if(super.size>super.maxSize){
             super.maxSize=super.size;
         }

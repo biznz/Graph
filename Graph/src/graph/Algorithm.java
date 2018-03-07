@@ -44,8 +44,9 @@ public class Algorithm {
             //System.out.println(nodes.toString());
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
-            /*System.out.println(Node.result(node));
-            System.out.println("cost:"+node.PATH_COST);
+            //System.out.println(Node.result(node));
+            //System.out.println("printing node @ depth: "+node.DEPTH);
+            /*System.out.println("cost:"+node.PATH_COST);
             System.out.println("---------");*/
             //System.out.println("Removing node:\n"+Node.result(node)+"\n");
             //System.out.println("path cost:"+node.getPATH_COST());
@@ -65,6 +66,7 @@ public class Algorithm {
             }
             Set<Node> new_nodes = EXPAND(node,OPERATORS());
             nodes = QUEUEING_FN.add(nodes,new_nodes);
+            //System.out.println(nodes.toString());
         }
         System.out.println("max Nodes:"+QUEUEING_FN.maxSize);
         System.out.println("visited "+visitedNodes+" nodes");
@@ -105,7 +107,7 @@ public class Algorithm {
     
     //method implements iterative depth search
     protected static String ITERATIVE_DEEPENING_SEARCH(Problem problem,Problem final1){
-       int depth=1;
+       int depth=0;
        String result;
        while(true){
            result = DEPTH_LIMITED_SEARCH(problem,final1,depth);
@@ -164,8 +166,8 @@ public class Algorithm {
     
     //method finds possible children of a node with all valid movements
     private static Set<Node> EXPAND(Node node,Set<Move> movements){
-        //System.out.println("expanding to Depth: "+(node.getDEPTH()+1));
-        //System.out.println("maximum depth is: "+maxDepth);
+        /*System.out.println("expanding to Depth: "+(node.getDEPTH()+1));
+        System.out.println("maximum depth is: "+maxDepth);*/
         Set<Node> childNodes = new HashSet<Node>();
         if(maxDepth!=null && node.getDEPTH()+1>maxDepth){
             //System.out.println("ENTERED DEPTH LIMIT IN NODE EXPANSION");
@@ -178,6 +180,7 @@ public class Algorithm {
                 newState = Move.execute(newState, m);
                 if(newState!=null){
                     Node newNode = new Node(node,newState,m,currentDepth,0);
+                    childNodes.add(newNode);
                     /*System.out.println("newly created node with movement: "+m.direction);
                     System.out.println(Node.result(newNode));
                     
@@ -185,14 +188,14 @@ public class Algorithm {
                     System.out.println(Node.result(newNode));
                     System.out.println(newNode.printMovement());
                     System.out.println("-----------------------");*/
-                    if(check_in_path){
+                    /*if(check_in_path){
                         if(!is_in_path(newNode.getPARENT_NODE(),newNode)){
                             childNodes.add(newNode);
                         }
                     }
                     else{
                         childNodes.add(newNode);
-                    }
+                    }*/
                 }
                 else{
                     System.out.println("Cannot do: "+m.direction+"\non"+Node.result(node));
@@ -271,6 +274,14 @@ public class Algorithm {
                 try{
                 node = (Node)lifo.list.pop();
                 lifo.size--;
+                if(check_in_path && lifo.size!=0){
+                    //System.out.println("-----checking at lvl"+node.DEPTH);
+                    if(is_in_path(node.getPARENT_NODE(),node)){
+                        //System.out.println("found repeated node \n"+Node.result(node));
+                        //System.out.println("at depth \n"+node.DEPTH);
+                        node = REMOVE_FRONT(nodes);
+                        }
+                    }
                 }
                 catch(EmptyStackException ex){
                     return null;
@@ -282,6 +293,15 @@ public class Algorithm {
                 Heap heap = (Heap) nodes;
                 try{
                     node = (Node)heap.list.remove();
+                    heap.size--;
+                    if(check_in_path && heap.size!=0){
+                    //System.out.println("-----checking at lvl"+node.DEPTH);
+                        if(is_in_path(node.getPARENT_NODE(),node)){
+                        //System.out.println("found repeated node \n"+Node.result(node));
+                        //System.out.println("at depth \n"+node.DEPTH);
+                        node = REMOVE_FRONT(nodes);
+                        }
+                    }
                     /*if(Algorithm.currentCost<node.PATH_COST){
                         return null;
                     }*/
