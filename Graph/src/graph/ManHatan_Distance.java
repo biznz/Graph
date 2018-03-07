@@ -11,6 +11,14 @@ package graph;
  */
 public class ManHatan_Distance extends Heuristic{
 
+    public ManHatan_Distance() {
+        super();
+        super.type = "manhatan";
+    }
+
+    
+    
+    
     @Override
     int calculate(State state) {
         int total_distance=0;

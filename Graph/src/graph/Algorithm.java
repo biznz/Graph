@@ -18,7 +18,7 @@ public class Algorithm {
     
     static Integer maxDepth = null;
     static Integer currentDepth;
-    static Integer currentCost;
+    static Integer currentCost=10000000;
     static Integer visitedNodes=0;
     static Lifo<Node> Path;
     static int[][] base15Matrix= {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,0}};
@@ -44,10 +44,10 @@ public class Algorithm {
             //System.out.println(nodes.toString());
             //if(EMPTY(nodes)){return null;}
             Node node = REMOVE_FRONT(nodes);
-            //System.out.println(Node.result(node));
-            //System.out.println("printing node @ depth: "+node.DEPTH);
-            /*System.out.println("cost:"+node.PATH_COST);
-            System.out.println("---------");*/
+            System.out.println(Node.result(node));
+            System.out.println("printing node @ depth: "+node.DEPTH);
+            System.out.println("cost:"+node.PATH_COST);
+            System.out.println("---------");
             //System.out.println("Removing node:\n"+Node.result(node)+"\n");
             //System.out.println("path cost:"+node.getPATH_COST());
             //System.out.println("Removing the node: ");
@@ -78,6 +78,13 @@ public class Algorithm {
         return false;
     }
     
+    public static void clearSettings(){
+        Algorithm.currentDepth=0;
+        Algorithm.currentCost=0;
+        Algorithm.maxDepth=null;
+        Algorithm.visitedNodes=0;
+        Algorithm.check_in_path=false;
+    }
     
     //method checks if problem is solvable
     public static boolean checkSolvable(Problem problem){
@@ -110,6 +117,7 @@ public class Algorithm {
        int depth=0;
        String result;
        while(true){
+           Algorithm.clearSettings();
            result = DEPTH_LIMITED_SEARCH(problem,final1,depth);
            if(result.equals("solution not found")){
                System.out.println("solution not found at depth: "+depth);
@@ -132,11 +140,11 @@ public class Algorithm {
         HashSet<Heuristic> heuristic = new HashSet<Heuristic>();
         //Algorithm.heuristic = new HashSet<Heuristic>();
         Heuristic a = new ManHatan_Distance();
-        Heuristic b = new Total_Displaced();
+        Heuristic b = new Path_Cost();
         heuristic.add(a);
         heuristic.add(b);
         Algorithm.heuristic = heuristic;
-        Algorithm.currentCost=100000;
+        //Algorithm.currentCost=100000;
         return BEST_FIRST_SEARCH(initial1,final1,heuristic);
     }
     
@@ -179,7 +187,7 @@ public class Algorithm {
                 State newState = new State(node.getSTATE().getPuzzle());
                 newState = Move.execute(newState, m);
                 if(newState!=null){
-                    Node newNode = new Node(node,newState,m,currentDepth,0);
+                    Node newNode = new Node(node,newState,m,currentDepth,currentDepth);
                     childNodes.add(newNode);
                     /*System.out.println("newly created node with movement: "+m.direction);
                     System.out.println(Node.result(newNode));
@@ -214,9 +222,11 @@ public class Algorithm {
     
     
     private static boolean is_in_path(Node new_Node,Node check){
-        if(new_Node!=null){
-            if(check.compareTo(new_Node)==0){return true;}
-            return is_in_path(new_Node.getPARENT_NODE(),check);
+        while(new_Node!=null){
+            if(check.compareTo(new_Node)==0){
+                return true;
+            }
+            new_Node = new_Node.getPARENT_NODE();
         }
         return false;
     }
@@ -251,6 +261,7 @@ public class Algorithm {
     
     private static Node REMOVE_FRONT(MyQueue<Node> nodes){
         Node node = null;
+        //Algorithm.currentDepth+=1;
         if(nodes.size==0){return node;}
         //System.out.println(nodes.type+"\n");
         visitedNodes+=1;
@@ -272,14 +283,16 @@ public class Algorithm {
             case "lifo":{
                 Lifo lifo = (Lifo) nodes;
                 try{
-                node = (Node)lifo.list.pop();
-                lifo.size--;
-                if(check_in_path && lifo.size!=0){
+                    node = (Node)lifo.list.pop();
+                    lifo.size--;
+                    if(check_in_path && lifo.size!=0){
                     //System.out.println("-----checking at lvl"+node.DEPTH);
-                    if(is_in_path(node.getPARENT_NODE(),node)){
-                        //System.out.println("found repeated node \n"+Node.result(node));
-                        //System.out.println("at depth \n"+node.DEPTH);
-                        node = REMOVE_FRONT(nodes);
+                    while(is_in_path(node.getPARENT_NODE(),node)){
+                        /*System.out.println("Found a repeated node");
+                        System.out.println("@ depth "+node.getDEPTH());
+                        System.out.println(Node.result(node));*/
+                        node = (Node) lifo.list.pop();
+                        lifo.size--;
                         }
                     }
                 }
@@ -292,21 +305,23 @@ public class Algorithm {
             case "heap":{
                 Heap heap = (Heap) nodes;
                 try{
-                    node = (Node)heap.list.remove();
+                    node = (Node) heap.list.remove();
                     heap.size--;
-                    if(check_in_path && heap.size!=0){
-                    //System.out.println("-----checking at lvl"+node.DEPTH);
-                        if(is_in_path(node.getPARENT_NODE(),node)){
-                        //System.out.println("found repeated node \n"+Node.result(node));
-                        //System.out.println("at depth \n"+node.DEPTH);
-                        node = REMOVE_FRONT(nodes);
-                        }
+                    if(node.PATH_COST<=Algorithm.currentCost){
+                        Algorithm.currentCost=node.PATH_COST;
                     }
-                    /*if(Algorithm.currentCost<node.PATH_COST){
-                        return null;
-                    }*/
+                    while(node.PATH_COST>Algorithm.currentCost){
+                        /*System.out.println("Found a repeated node");
+                        System.out.println("@ depth "+node.getDEPTH());
+                            System.out.println(Node.result(node));*/
+                            node = (Node) heap.list.remove();
+                            heap.size--;
+                            if(node.PATH_COST<=Algorithm.currentCost){
+                                Algorithm.currentCost=node.PATH_COST;
+                            }
+                    }
+                    System.out.println("removed node pathCost: "+node.getPATH_COST());
                     Algorithm.currentCost=node.PATH_COST;
-                    heap.size--;
                 }
                 catch(EmptyStackException ex){
                     return null;

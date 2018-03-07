@@ -107,19 +107,19 @@ public class GraphMain {
                 //Algorithm.maxDepth=35;
                 System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()),
                         new Problem(Menu.getOutput()), new Lifo()));
-                Algorithm.check_in_path=false;
-                Algorithm.maxDepth=null;
+                Algorithm.clearSettings();
                 break;
             }
             case 2:{
                 System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()),
                         new Problem(Menu.getOutput()), new Fifo()));
+                Algorithm.clearSettings();
                 break;
             }
             case 3:{
                 System.out.println(Algorithm.ITERATIVE_DEEPENING_SEARCH(new Problem(Menu.getInput()),
                         new Problem(Menu.getOutput())));
-                Algorithm.maxDepth=null;
+                Algorithm.clearSettings();
                 break;
             }
             case 4:{
@@ -129,16 +129,19 @@ public class GraphMain {
                 //System.out.println("total displaced is "+b.calculate(new State(new Problem(Menu.getInput()))));
                 //Algorithm.check_in_path=true;
                 System.out.println(Algorithm.A_STAR_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput())));
+                Algorithm.clearSettings();
                 //Algorithm.check_in_path=false;
                 //System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput()), new Heap()));
                 break;
             }
             case 5:{
                 System.out.println(Algorithm.GREEDY_SEARCH(new Problem(Menu.getInput()), new Problem(Menu.getOutput())));
+                Algorithm.clearSettings();
                 break;
             }
             case 6:{
                 System.out.println("Solvable: "+Algorithm.SOLVABLE(new Problem(Menu.getInput()), new Problem(Menu.getOutput())));
+                Algorithm.clearSettings();
                 break;
             }
             case 7:{

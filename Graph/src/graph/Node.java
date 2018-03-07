@@ -73,6 +73,10 @@ public class Node implements Comparable<Node>{
         return PATH_COST;
     }
     
+    public void setPATH_COST(int cost){
+        this.PATH_COST=cost;
+    }
+    
     private static boolean equalPuzzle(Node a,Node b){
         for(int s=0;s<a.STATE.getPuzzle().length;s++){
             for(int h=0;h<b.STATE.getPuzzle().length;h++){
@@ -98,15 +102,19 @@ public class Node implements Comparable<Node>{
             int totalA=0;
             int totalB=0;
             for(Heuristic h: Algorithm.heuristic){
-                totalA +=h.calculate(this.STATE);
-                //System.out.println("cost "+totalA);
-                totalB +=h.calculate(o.STATE);
-                //System.out.println("cost "+totalB);
-                //System.out.println("");
+                if(!h.type.equals("pathcost")){
+                    totalA = this.PATH_COST;
+                    totalB = o.PATH_COST;
+                    //totalA +=h.calculate(this.STATE);
+                    //System.out.println("cost "+totalA);
+                    //totalB +=h.calculate(o.STATE);
+                    //System.out.println("cost "+totalB);
+                    //System.out.println("");
+                }
             }
-            this.PATH_COST=totalA;
-            o.PATH_COST=totalB;
-            if(totalA<totalB){
+            //this.PATH_COST=totalA;
+            //o.PATH_COST=totalB;
+            if(totalA<=totalB){
                 return -1;
             }
         }

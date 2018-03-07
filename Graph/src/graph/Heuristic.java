@@ -11,5 +11,6 @@ package graph;
  */
 public abstract class Heuristic {
     int value;
+    String type;
     abstract int calculate(State state);
 }

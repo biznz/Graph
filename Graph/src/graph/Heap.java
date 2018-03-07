@@ -39,11 +39,7 @@ public class Heap<T> extends MyQueue<T> {
         Heap heap = (Heap)queue;
         if(nodes==null){return heap;}
         for(Node n: nodes){
-            heap.list.add(n);
-            super.size+=1;
-            if(super.size>super.maxSize){
-                super.maxSize = super.size;
-            }
+            heap.add(queue, n);
         }
         return heap;
     }
@@ -52,7 +48,16 @@ public class Heap<T> extends MyQueue<T> {
     public Heap add(MyQueue<Node> queue,Node node){
         Heap heap = (Heap) queue;
         if(node==null){return heap;}
-        for(Heuristic h: Algorithm.heuristic){node.PATH_COST +=h.calculate(node.STATE);}
+        //System.out.append(Algorithm.heuristic.size()+" num of heuristics");
+        for(Heuristic h: Algorithm.heuristic){
+            if(!h.type.equals("pathcost")){
+                node.setPATH_COST(node.DEPTH+h.calculate(node.STATE));
+                System.out.println("manhatan distance"+h.calculate(node.STATE));
+            }
+        }
+        System.out.println("node depth: "+node.DEPTH);
+        //System.out.println("value: "+node.DEPTH);
+        System.out.println("node total cost: "+node.PATH_COST);
         heap.list.add(node);
         super.size+=1;
         if(super.size>super.maxSize){

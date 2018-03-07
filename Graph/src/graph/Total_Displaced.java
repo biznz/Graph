@@ -11,6 +11,11 @@ package graph;
  */
 public class Total_Displaced extends Heuristic{
 
+    public Total_Displaced() {
+        super();
+        super.type = "displaced";
+    }
+    
     @Override
     int calculate(State state) {
         int total_displaced=0;
