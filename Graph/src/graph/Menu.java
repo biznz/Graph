@@ -1,9 +1,11 @@
+package graph;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package graph;
+
 
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -47,8 +49,9 @@ public class Menu {
     private String depthLimit2="depth limit 20";
     private String depthLimit3="depth limit 30";
     private String depthLimit4="depth limit 40";
+    private String depthLimit5="no depht limit";
         
-    /** testes enviados pela dutra**/
+    /** testes enviados pela Dutra**/
     
     /*private String teste4 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
     private String teste5 = "1 2 3 4 5 0 7 8 9 6 10 12 13 14 11 15";
@@ -100,6 +103,7 @@ public class Menu {
                 options.put(2,depthLimit2);
                 options.put(3,depthLimit3);
                 options.put(4,depthLimit4);
+                options.put(5,depthLimit5);
                 break;
             }
             
@@ -148,6 +152,15 @@ public class Menu {
     }
     
     public String getOptionString(){
+        String a;
+        if(this.lvl==3){
+            if(this.chosenOption==5){
+                return null;
+            }
+            String s = this.options.get(this.chosenOption);
+            a = this.options.get(this.chosenOption).substring(s.length()-2,s.length());
+            return a;
+        }
         return this.options.get(this.chosenOption);
     }
     

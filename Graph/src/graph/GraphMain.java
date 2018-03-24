@@ -1,9 +1,11 @@
+package graph;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package graph;
+
 
 
 import java.util.HashSet;
@@ -30,6 +32,7 @@ public class GraphMain {
         System.out.println("comaparing"+aa.compareTo(b));*/
         Menu main = new Menu(0);
         Menu secondary = new Menu(1);
+        Menu tertiary =null;
         Scanner in = new Scanner(System.in);
         boolean start = false;
         while(main.getChosenOption()==-1){
@@ -92,13 +95,13 @@ public class GraphMain {
             }
         }
         if(secondary.getChosenOption()==1){
-            Menu menu = new Menu(3);
-            menu.printMenu();
+            tertiary = new Menu(3);
+            tertiary.printMenu();
             if(in.hasNext()){
                 String input = in.next();
                 try{
-                    menu.setChosenOption(Integer.parseInt(input), null);
-                    if(menu.getChosenOption()==-1){
+                    tertiary.setChosenOption(Integer.parseInt(input), null);
+                    if(tertiary.getChosenOption()==-1){
                         System.out.println("not an option, try again");
                     }
                 }
@@ -112,6 +115,9 @@ public class GraphMain {
         System.out.println("Testing initial state: "+Menu.getInput()+"\n"+"and goal state: "
                 +Menu.getOutput());
         System.out.println("Selected action: "+secondary.getOptionString());
+        if(tertiary!=null){
+            System.out.println("Selected depth: "+tertiary.getOptionString());
+        }
         System.out.println("\nInsert 0 to start");
         while(!start){
             String a = in.next();
@@ -123,6 +129,9 @@ public class GraphMain {
             case 1:{
                 Algorithm.check_in_path=true;
                 //Algorithm.maxDepth=5;
+                if(tertiary.getOptionString()!=null){
+                Algorithm.maxDepth = Integer.parseInt(tertiary.getOptionString());
+                }
                 System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()),
                         new Problem(Menu.getOutput()), new Lifo()));
                 Algorithm.clearSettings();

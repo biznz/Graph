@@ -1,9 +1,11 @@
+package graph;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package graph;
+
 
 import java.util.Arrays;
 import java.util.EmptyStackException;
@@ -174,11 +176,11 @@ public class Algorithm {
     
     //method finds possible children of a node with all valid movements
     private static Set<Node> EXPAND(Node node,Set<Move> movements){
-        /*System.out.println("expanding to Depth: "+(node.getDEPTH()+1));
-        System.out.println("maximum depth is: "+maxDepth);*/
+//        System.out.println("expanding to Depth: "+(node.getDEPTH()+1));
+//        System.out.println("maximum depth is: "+maxDepth);
         Set<Node> childNodes = new HashSet<Node>();
         if(maxDepth!=null && node.getDEPTH()+1>maxDepth){
-            System.out.println("ENTERED DEPTH LIMIT IN NODE EXPANSION");
+//            System.out.println("ENTERED DEPTH LIMIT IN NODE EXPANSION");
             return null;
         }
         currentDepth = new Integer(node.getDEPTH()+1);
