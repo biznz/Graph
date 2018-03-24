@@ -91,6 +91,24 @@ public class GraphMain {
                 }
             }
         }
+        if(secondary.getChosenOption()==1){
+            Menu menu = new Menu(3);
+            menu.printMenu();
+            if(in.hasNext()){
+                String input = in.next();
+                try{
+                    menu.setChosenOption(Integer.parseInt(input), null);
+                    if(menu.getChosenOption()==-1){
+                        System.out.println("not an option, try again");
+                    }
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                    System.out.println("invalid input");
+                }
+            }
+            
+        }
         System.out.println("Testing initial state: "+Menu.getInput()+"\n"+"and goal state: "
                 +Menu.getOutput());
         System.out.println("Selected action: "+secondary.getOptionString());
@@ -104,7 +122,7 @@ public class GraphMain {
         switch(secondary.getChosenOption()){
             case 1:{
                 Algorithm.check_in_path=true;
-                //Algorithm.maxDepth=35;
+                //Algorithm.maxDepth=5;
                 System.out.println(Algorithm.GENERAL_SEARCH(new Problem(Menu.getInput()),
                         new Problem(Menu.getOutput()), new Lifo()));
                 Algorithm.clearSettings();

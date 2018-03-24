@@ -42,6 +42,11 @@ public class Menu {
     
     private String teste4 = "1 2 3 4 5 6 7 0 9 10 11 8 13 14 15 12"; //solution at depth 2
     private String final4 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0";
+    
+    private String depthLimit1="depth limit 15";
+    private String depthLimit2="depth limit 20";
+    private String depthLimit3="depth limit 30";
+    private String depthLimit4="depth limit 40";
         
     /** testes enviados pela dutra**/
     
@@ -87,6 +92,14 @@ public class Menu {
             }
             case 2:{
                 this.message = "Introduce puzzle initial state and goal state\n";
+                break;
+            }
+            case 3:{
+                this.message = "Please insert a depth limit";
+                options.put(1,depthLimit1);
+                options.put(2,depthLimit2);
+                options.put(3,depthLimit3);
+                options.put(4,depthLimit4);
                 break;
             }
             

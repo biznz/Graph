@@ -178,7 +178,7 @@ public class Algorithm {
         System.out.println("maximum depth is: "+maxDepth);*/
         Set<Node> childNodes = new HashSet<Node>();
         if(maxDepth!=null && node.getDEPTH()+1>maxDepth){
-            //System.out.println("ENTERED DEPTH LIMIT IN NODE EXPANSION");
+            System.out.println("ENTERED DEPTH LIMIT IN NODE EXPANSION");
             return null;
         }
         currentDepth = new Integer(node.getDEPTH()+1);
